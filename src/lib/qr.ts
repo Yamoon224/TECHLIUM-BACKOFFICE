@@ -65,9 +65,9 @@ export function isLogoFileAllowed(file: Pick<File, "type" | "size">, maxBytes = 
   return (LOGO_TYPES as readonly string[]).includes(file.type) && file.size > 0 && file.size <= maxBytes;
 }
 
-/** Reads back `TECHNILIUM:<KIND>:<REFERENCE>` (what a scanner types), or null for anything else. */
+/** Reads back `TechniLium:<KIND>:<REFERENCE>` (what a scanner types), or null for anything else. */
 export function parseQrPayload(text: string): { kind: QrKind; reference: string } | null {
-  const match = /^TECHNILIUM:(PRODUCT|ORDER|INVOICE|SUPPLY):([A-Za-z0-9][A-Za-z0-9._/-]*)$/.exec(text.trim());
+  const match = /^TechniLium:(PRODUCT|ORDER|INVOICE|SUPPLY):([A-Za-z0-9][A-Za-z0-9._/-]*)$/.exec(text.trim());
 
   return match ? { kind: match[1].toLowerCase() as QrKind, reference: match[2] } : null;
 }

@@ -484,7 +484,7 @@ function NewOfferForm({
         </label>
         <p className="text-xs text-ink-soft sm:col-span-2">
           {tr(
-            "L'offre part en modération avant publication. Seuls les produits déjà publiés par Technilium sont proposables.",
+            "L'offre part en modération avant publication. Seuls les produits déjà publiés par TechniLium sont proposables.",
           )}
         </p>
       </div>

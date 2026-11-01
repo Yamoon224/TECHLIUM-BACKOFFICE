@@ -11,7 +11,7 @@ export interface OrderItem {
   line_total: { amount: number; currency: string };
 }
 
-/** One seller's share of an order (vendor_id null = Technilium's own stock). */
+/** One seller's share of an order (vendor_id null = TechniLium's own stock). */
 export interface SubOrder {
   id: number;
   vendor_id: number | null;
@@ -45,7 +45,7 @@ export interface Order {
 export class OrdersError extends Error {}
 
 export function sellerLabel(subOrder: Pick<SubOrder, "vendor_id">): string {
-  return subOrder.vendor_id === null ? "Technilium" : `Vendeur #${subOrder.vendor_id}`;
+  return subOrder.vendor_id === null ? "TechniLium" : `Vendeur #${subOrder.vendor_id}`;
 }
 
 /** Only worth showing the per-seller breakdown when more than one seller is involved. */

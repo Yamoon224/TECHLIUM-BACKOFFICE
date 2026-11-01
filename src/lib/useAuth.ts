@@ -6,7 +6,7 @@ import { AuthError, TOKEN_STORAGE_KEY, fetchCurrentUser, login as loginRequest, 
 type SessionStatus = "checking" | "ready";
 
 /** Tells the application shell (its own session reader) that the user logged in or out. */
-export const AUTH_CHANGED_EVENT = "technilium:auth-changed";
+export const AUTH_CHANGED_EVENT = "TechniLium:auth-changed";
 
 function announceAuthChange() {
   window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
@@ -42,7 +42,7 @@ export function useAuth() {
   }, [hasStoredToken]);
 
   async function login(email: string, password: string): Promise<void> {
-    const result = await loginRequest(email, password, "technilium-backoffice-web");
+    const result = await loginRequest(email, password, "TechniLium-backoffice-web");
     localStorage.setItem(TOKEN_STORAGE_KEY, result.token);
     setToken(result.token);
     setUser(result.user);

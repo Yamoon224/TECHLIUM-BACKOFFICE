@@ -18,14 +18,14 @@ describe("logoBox", () => {
 
 describe("parseQrPayload", () => {
   it("reads back what a code says", () => {
-    expect(parseQrPayload("TECHNILIUM:ORDER:TCH-20261025-AB12CD")).toEqual({ kind: "order", reference: "TCH-20261025-AB12CD" });
-    expect(parseQrPayload(" TECHNILIUM:SUPPLY:12 ")).toEqual({ kind: "supply", reference: "12" });
+    expect(parseQrPayload("TechniLium:ORDER:TCH-20261025-AB12CD")).toEqual({ kind: "order", reference: "TCH-20261025-AB12CD" });
+    expect(parseQrPayload(" TechniLium:SUPPLY:12 ")).toEqual({ kind: "supply", reference: "12" });
   });
 
   it("refuses anything else", () => {
     expect(parseQrPayload("https://exemple.com")).toBeNull();
-    expect(parseQrPayload("TECHNILIUM:USER:1")).toBeNull();
-    expect(parseQrPayload("TECHNILIUM:ORDER:<script>")).toBeNull();
+    expect(parseQrPayload("TechniLium:USER:1")).toBeNull();
+    expect(parseQrPayload("TechniLium:ORDER:<script>")).toBeNull();
   });
 });
 
@@ -55,7 +55,7 @@ describe("logoBoxExact", () => {
 
 describe("buildQrSvg", () => {
   it("is a square and places the logo inside the code, in the drawing's own units", async () => {
-    const svg = await buildQrSvg("TECHNILIUM:ORDER:1", { ...DEFAULT_STYLE, logo: "data:image/png;base64,AAAA" });
+    const svg = await buildQrSvg("TechniLium:ORDER:1", { ...DEFAULT_STYLE, logo: "data:image/png;base64,AAAA" });
     const [, units] = /viewBox="0 0 (\d+) (\d+)"/.exec(svg) ?? [];
     const sides = /viewBox="0 0 (\d+) (\d+)"/.exec(svg);
 

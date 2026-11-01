@@ -40,7 +40,7 @@ describe("changeDue", () => {
 });
 
 describe("sellableOffers", () => {
-  const product = (offers: { id: number; seller: "technilium" | "vendor"; stock_quantity: number; in_stock: boolean }[]) => ({
+  const product = (offers: { id: number; seller: "TechniLium" | "vendor"; stock_quantity: number; in_stock: boolean }[]) => ({
     brand: "Samsung",
     name: "Galaxy A15",
     variants: [{ sku: "A15-128", offers: offers.map((offer) => ({ ...offer, price: { amount: 59_000, currency: "XOF" } })) }],
@@ -49,9 +49,9 @@ describe("sellableOffers", () => {
   it("keeps own in-stock offers only", () => {
     const offers = sellableOffers([
       product([
-        { id: 1, seller: "technilium", stock_quantity: 3, in_stock: true },
+        { id: 1, seller: "TechniLium", stock_quantity: 3, in_stock: true },
         { id: 2, seller: "vendor", stock_quantity: 9, in_stock: true },
-        { id: 3, seller: "technilium", stock_quantity: 0, in_stock: false },
+        { id: 3, seller: "TechniLium", stock_quantity: 0, in_stock: false },
       ]),
     ]);
 

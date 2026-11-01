@@ -395,7 +395,7 @@ function SalesChart({ days }: { days: { date: string; orders: number; revenue: n
 }
 
 /**
- * Technilium's own-stock gross margin. Revenue is excluding VAT and net of the
+ * TechniLium's own-stock gross margin. Revenue is excluding VAT and net of the
  * coupon share borne by own lines; third-party vendors' sales and commissions
  * are not in it. Returns are shown beside it, not netted.
  */
@@ -428,9 +428,9 @@ function MarginSection({ token, period }: { token: string; period: Period }) {
   const { totals } = margin;
 
   return (
-    <section className="flex flex-col gap-4 border-t border-line pt-8" aria-label={tr("Marge de Technilium")}>
+    <section className="flex flex-col gap-4 border-t border-line pt-8" aria-label={tr("Marge de TechniLium")}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="section-title font-display text-xl font-semibold text-ink">{tr("Marge de Technilium")}</h2>
+        <h2 className="section-title font-display text-xl font-semibold text-ink">{tr("Marge de TechniLium")}</h2>
         <button
           type="button"
           onClick={() =>
@@ -465,7 +465,7 @@ function MarginSection({ token, period }: { token: string; period: Period }) {
       ) : (
         <div className="overflow-x-auto rounded-sm bg-surface p-4 shadow-card border-b-4 border-b-gold">
           <DataTable
-  name="marge-technilium"
+  name="marge-TechniLium"
   rows={margin.by_product}
   headers={[tr("Produit"), tr("Unités"), tr("CA HT"), tr("Coût"), tr("Marge"), tr("Taux")]}
   renderRow={(row) => (

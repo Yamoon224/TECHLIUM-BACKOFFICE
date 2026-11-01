@@ -5,14 +5,14 @@ import { pageTitle } from "./pageTitle";
 
 describe("pageTitle", () => {
   it("names the page and the app", () => {
-    expect(pageTitle("Commandes")).toBe("Commandes - Technilium Backoffice");
-    expect(pageTitle(null)).toBe("Technilium Backoffice");
+    expect(pageTitle("Commandes")).toBe("Commandes - TechniLium Backoffice");
+    expect(pageTitle(null)).toBe("TechniLium Backoffice");
   });
 
   it("is translated with the navigation labels, in both languages", () => {
     const orders = STAFF_NAV.flatMap((group) => group.items).find((item) => isActive(item.href, "/commandes"));
 
-    expect(pageTitle(translate("fr", orders!.label))).toBe("Commandes - Technilium Backoffice");
-    expect(pageTitle(translate("en", orders!.label))).toBe("Orders - Technilium Backoffice");
+    expect(pageTitle(translate("fr", orders!.label))).toBe("Commandes - TechniLium Backoffice");
+    expect(pageTitle(translate("en", orders!.label))).toBe("Orders - TechniLium Backoffice");
   });
 });

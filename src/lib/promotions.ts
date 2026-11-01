@@ -1,6 +1,6 @@
 /**
  * Client-side access to the Promotions module's admin endpoints
- * (backend/app/Modules/Promotions). Discounts are borne by Technilium:
+ * (backend/app/Modules/Promotions). Discounts are borne by TechniLium:
  * vendors are paid on the list price.
  */
 

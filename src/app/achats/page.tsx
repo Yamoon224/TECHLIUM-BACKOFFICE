@@ -482,7 +482,7 @@ function NewOrderForm({
         {total > 0 ? ` (${xof(total)})` : ""}
       </Button>
       <p className="w-full text-xs text-ink-soft">
-        {tr("Seul le stock propre de Technilium peut être acheté. Le bon est créé en brouillon.")}
+        {tr("Seul le stock propre de TechniLium peut être acheté. Le bon est créé en brouillon.")}
       </p>
       {error ? <p className="w-full text-sm text-danger">{error}</p> : null}
     </form>

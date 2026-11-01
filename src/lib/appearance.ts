@@ -22,7 +22,7 @@ export interface Appearance {
   language: Language;
 }
 
-export const STORAGE_KEY = "technilium_backoffice_appearance";
+export const STORAGE_KEY = "TechniLium_backoffice_appearance";
 
 /** Brand gold first (the default), then the usual accents. */
 export const PRIMARY_COLORS = [

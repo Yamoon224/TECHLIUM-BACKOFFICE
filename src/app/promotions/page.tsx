@@ -150,7 +150,7 @@ export default function PromotionsPage() {
         )}
 
         <p className="text-xs text-ink-soft">
-          {tr("Les remises sont à la charge de Technilium : le vendeur est payé et commissionné sur le prix affiché.")}
+          {tr("Les remises sont à la charge de TechniLium : le vendeur est payé et commissionné sur le prix affiché.")}
         </p>
       </main>
     </div>
