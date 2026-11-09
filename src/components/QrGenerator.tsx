@@ -35,7 +35,11 @@ function save(blob: Blob, filename: string) {
 
 /**
  * Builds the QR code of a product, order, invoice or supply, with the logo at its centre (the
+<<<<<<< HEAD
  * TechLium logo, or a picture of your own), and saves it as PNG or SVG. The server checks that the
+=======
+ * TechniLium logo, or a picture of your own), and saves it as PNG or SVG. The server checks that the
+>>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
  * record exists and that the account may use it; the picture is drawn here.
  */
 export function QrGenerator({
@@ -183,7 +187,11 @@ export function QrGenerator({
 
             {customLogo ? (
               <button type="button" onClick={() => setCustomLogo(null)} className="flex items-center gap-1 self-start text-xs text-ink-soft hover:text-ink">
+<<<<<<< HEAD
                 <ImageOff className="h-3.5 w-3.5" aria-hidden /> {tr("Revenir au logo TechLium")}
+=======
+                <ImageOff className="h-3.5 w-3.5" aria-hidden /> {tr("Revenir au logo TechniLium")}
+>>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
               </button>
             ) : null}
 

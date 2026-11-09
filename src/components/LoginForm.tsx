@@ -44,7 +44,11 @@ export function LoginForm({ onSubmit, submitting, error }: LoginFormProps) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           className="rounded-sm border border-line bg-bg px-3 py-2 text-ink focus:border-gold focus:outline-none"
+<<<<<<< HEAD
           placeholder="prenom.nom@TechLium.app"
+=======
+          placeholder="prenom.nom@TechniLium.app"
+>>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
         />
         <span className="field-label">{t("login.email")}</span>
       </label>

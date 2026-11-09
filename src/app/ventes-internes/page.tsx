@@ -317,7 +317,11 @@ export default function InternalSalesPage() {
                   ))}
                 </ul>
               ) : searching ? null : search.trim() !== "" ? (
+<<<<<<< HEAD
                 <p className="text-sm text-ink-soft">{tr("Aucun article en stock TechLium pour cette recherche.")}</p>
+=======
+                <p className="text-sm text-ink-soft">{tr("Aucun article en stock TechniLium pour cette recherche.")}</p>
+>>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
               ) : null}
             </section>
 

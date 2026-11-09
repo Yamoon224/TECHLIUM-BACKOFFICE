@@ -56,7 +56,11 @@ export function ForgotPasswordForm() {
             </p>
 
             <label className="field">
+<<<<<<< HEAD
               <input name="email" type="email" required autoComplete="email" placeholder="prenom.nom@TechLium.app" className="text-ink" />
+=======
+              <input name="email" type="email" required autoComplete="email" placeholder="prenom.nom@TechniLium.app" className="text-ink" />
+>>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
               <span className="field-label">{tr("Adresse e-mail")}</span>
             </label>
 
