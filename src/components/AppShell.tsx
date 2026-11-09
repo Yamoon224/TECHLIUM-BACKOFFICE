@@ -147,11 +147,7 @@ function Brand({ collapsed }: { collapsed: boolean }) {
       <Image src="/icon-192.png" alt="" width={40} height={40} priority className="h-10 w-10 shrink-0 rounded-md" />
       {collapsed ? null : (
         <span className="flex flex-col leading-tight">
-<<<<<<< HEAD
           <span className="font-display text-base font-semibold">TechLium</span>
-=======
-          <span className="font-display text-base font-semibold">TechniLium</span>
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
           <span className="text-xs opacity-70">{t("shell.workspace")}</span>
         </span>
       )}

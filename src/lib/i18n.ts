@@ -70,11 +70,7 @@ const FR = {
   "settings.language": "Langue",
   "settings.reset": "Réinitialiser l'apparence",
   "login.title": "Connexion backoffice",
-<<<<<<< HEAD
   "login.subtitle": "Réservé à l'équipe et aux vendeurs TechLium.",
-=======
-  "login.subtitle": "Réservé à l'équipe et aux vendeurs TechniLium.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "login.email": "Adresse e-mail",
   "login.password": "Mot de passe",
   "login.submit": "Se connecter",
@@ -207,11 +203,7 @@ const EN: Record<MessageKey, string> = {
   "settings.language": "Language",
   "settings.reset": "Reset appearance",
   "login.title": "Back office sign-in",
-<<<<<<< HEAD
   "login.subtitle": "Reserved for the TechLium team and vendors.",
-=======
-  "login.subtitle": "Reserved for the TechniLium team and vendors.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "login.email": "Email address",
   "login.password": "Password",
   "login.submit": "Sign in",

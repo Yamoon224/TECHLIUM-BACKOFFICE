@@ -274,11 +274,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Lignes (offre:quantité:coût unitaire)": "Lines (offer:quantity:unit cost)",
   "Livraison attendue": "Expected delivery",
   "Créer le bon": "Create the order",
-<<<<<<< HEAD
   "Seul le stock propre de TechLium peut être acheté. Le bon est créé en brouillon.": "Only TechLium's own stock can be bought. The order is created as a draft.",
-=======
-  "Seul le stock propre de TechniLium peut être acheté. Le bon est créé en brouillon.": "Only TechniLium's own stock can be bought. The order is created as a draft.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "Contact": "Contact",
   "Paiement à (jours)": "Payment within (days)",
   "Aucun fournisseur.": "No suppliers.",
@@ -370,11 +366,7 @@ export const PHRASES_EN: Record<string, string> = {
   "ID variante produit": "Product variant ID",
   "Garantie (mois)": "Warranty (months)",
   "Soumettre l'offre": "Submit the offer",
-<<<<<<< HEAD
   "L'offre part en modération avant publication. Seuls les produits déjà publiés par TechLium sont proposables.": "The offer goes to moderation before it is published. Only products already published by TechLium can be offered.",
-=======
-  "L'offre part en modération avant publication. Seuls les produits déjà publiés par TechniLium sont proposables.": "The offer goes to moderation before it is published. Only products already published by TechniLium can be offered.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "Factures indisponibles.": "Invoices are unavailable.",
   "Le PDF n'a pas pu être téléchargé.": "The PDF could not be downloaded.",
   "L'avoir n'a pas pu être émis.": "The credit note could not be issued.",
@@ -457,11 +449,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Utilisations": "Uses",
   "Validité": "Validity",
   "État": "State",
-<<<<<<< HEAD
   "Les remises sont à la charge de TechLium : le vendeur est payé et commissionné sur le prix affiché.": "Discounts are borne by TechLium: the vendor is paid and charged commission on the displayed price.",
-=======
-  "Les remises sont à la charge de TechniLium : le vendeur est payé et commissionné sur le prix affiché.": "Discounts are borne by TechniLium: the vendor is paid and charged commission on the displayed price.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "BIENVENUE10": "BIENVENUE10",
   "Pourcentage": "Percentage",
   "Montant fixe": "Fixed amount",
@@ -500,11 +488,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Chiffre d'affaires": "Revenue",
   "Marge indisponible.": "Margin is unavailable.",
   "Chargement de la marge…": "Loading the margin…",
-<<<<<<< HEAD
   "Marge de TechLium": "TechLium margin",
-=======
-  "Marge de TechniLium": "TechniLium margin",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "Exporter la marge (CSV)": "Export margin (CSV)",
   "ligne(s) vendue(s), soit": "line(s) sold, i.e.",
   "de chiffre d'affaires HT, n'ont aucun coût enregistré (produit jamais acheté par le module Achats) : la marge affichée est surestimée d'autant.": "of revenue excl. VAT, have no recorded cost (product never bought through Purchasing): the margin shown is overstated by that much.",
@@ -806,11 +790,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Logo au centre": "Logo in the centre",
   "Afficher un logo au centre du code": "Show a logo in the centre of the code",
   "Votre propre logo (PNG, JPEG ou WebP)": "Your own logo (PNG, JPEG or WebP)",
-<<<<<<< HEAD
   "Revenir au logo TechLium": "Back to the TechLium logo",
-=======
-  "Revenir au logo TechniLium": "Back to the TechniLium logo",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "Taille du logo": "Logo size",
   "Couleur du code": "Code colour",
   "Gardez un code sombre sur fond clair : c'est ce que les lecteurs lisent le mieux.": "Keep a dark code on a light background: it is what readers scan best.",
@@ -856,11 +836,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Galaxy A15": "Galaxy A15",
   "Rechercher un produit": "Search a product",
   "Rechercher": "Search",
-<<<<<<< HEAD
   "Aucun article en stock TechLium pour cette recherche.": "No TechLium stock item matches this search.",
-=======
-  "Aucun article en stock TechniLium pour cette recherche.": "No TechniLium stock item matches this search.",
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   "Panier": "Cart",
   "Le panier est vide.": "The cart is empty.",
   "Client comptoir": "Walk-in customer",

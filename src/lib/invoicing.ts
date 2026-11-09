@@ -34,11 +34,7 @@ export interface Invoice {
   net_amount: number;
   vat_amount: number;
   total_amount: number;
-<<<<<<< HEAD
   /** Coupon discount already taken off the lines' list price (borne by TechLium). */
-=======
-  /** Coupon discount already taken off the lines' list price (borne by TechniLium). */
->>>>>>> 0376d01425630b79cfcc80c036cb7a4206e89841
   discount_amount: number;
   coupon_code: string | null;
   reason: string | null;
