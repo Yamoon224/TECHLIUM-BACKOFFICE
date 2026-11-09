@@ -6,9 +6,11 @@ import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { BackofficeNav } from "@/components/BackofficeNav";
 import { FormModal, Modal } from "@/components/Modal";
+import { Download } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { exportTable, type ExportFormat } from "@/lib/exporters";
 import { useAuth } from "@/lib/useAuth";
 import {
   InventoryError,
@@ -239,6 +241,31 @@ function HistoryModal({ token, product, onClose }: { token: string; product: Sto
   const { tr } = useAppearance();
   const [movements, setMovements] = useState<StockMovement[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+
+  async function handleExport(format: ExportFormat) {
+    if (!movements) return;
+    setExporting(true);
+    setExportError(null);
+    try {
+      await exportTable(format, {
+        name: `historique-stock-${product.sku}`,
+        title: `${tr("Historique du stock")} - ${product.brand} ${product.product_name} (${product.sku})`,
+        headers: [tr("Date"), tr("Variation"), tr("Stock après"), tr("Motif")],
+        rows: movements.map((movement) => [
+          movement.created_at ? new Date(movement.created_at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" }) : "-",
+          `${movement.quantity_delta > 0 ? "+" : ""}${movement.quantity_delta}`,
+          String(movement.quantity_after),
+          movement.reason ?? "-",
+        ]),
+      });
+    } catch {
+      setExportError(tr("Export impossible."));
+    } finally {
+      setExporting(false);
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -257,9 +284,41 @@ function HistoryModal({ token, product, onClose }: { token: string; product: Sto
       title={`${tr("Historique du stock")} - ${product.brand} ${product.product_name}`}
       onClose={onClose}
       footer={
-        <Button type="button" variant="secondary" onClick={onClose}>
-          <ActionLabel text={tr("Fermer")} />
-        </Button>
+        <>
+          {exportError ? (
+            <p role="alert" className="mr-auto text-sm text-danger">
+              {exportError}
+            </p>
+          ) : movements && movements.length > 0 ? (
+            <div className="mr-auto flex flex-wrap items-center gap-1.5" role="group" aria-label={tr("Exporter")}>
+              <span className="mr-1 flex items-center gap-1 text-xs text-ink-soft">
+                <Download className="h-3.5 w-3.5" aria-hidden /> {tr("Exporter")}
+              </span>
+              {(
+                [
+                  ["pdf", "PDF"],
+                  ["xlsx", "Excel"],
+                  ["csv", "CSV"],
+                  ["txt", "TXT"],
+                  ["sql", "SQL"],
+                ] as [ExportFormat, string][]
+              ).map(([format, label]) => (
+                <button
+                  key={format}
+                  type="button"
+                  disabled={exporting}
+                  onClick={() => void handleExport(format)}
+                  className="rounded-sm border border-line px-2 py-1 text-xs font-medium text-ink transition-colors hover:border-gold disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <Button type="button" variant="secondary" onClick={onClose}>
+            <ActionLabel text={tr("Fermer")} />
+          </Button>
+        </>
       }
     >
       {error ? (

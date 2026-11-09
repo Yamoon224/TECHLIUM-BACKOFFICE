@@ -466,6 +466,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Casse, perte, correction d'inventaire…": "Breakage, loss, inventory correction…",
   "Historique du stock": "Stock history",
   "Historique indisponible.": "History unavailable.",
+  "Exporter": "Export",
   "Livreur": "Courier",
   "Vente": "Sale",
   "Payée": "Paid",
