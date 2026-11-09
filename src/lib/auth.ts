@@ -7,7 +7,7 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1";
 
-export const TOKEN_STORAGE_KEY = "technilium_backoffice_token";
+export const TOKEN_STORAGE_KEY = "TechLium_backoffice_token";
 
 export interface User {
   id: number;

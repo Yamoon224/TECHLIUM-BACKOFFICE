@@ -1,10 +1,10 @@
-# Technilium - Backoffice
+# TechLium - Backoffice
 
-Backoffice de gestion (équipe Technilium et vendeurs tiers) : catalogue, stocks, commandes, facturation, comptabilité, logistique, SAV.
+Backoffice de gestion (équipe TechLium et vendeurs tiers) : catalogue, stocks, commandes, facturation, comptabilité, logistique, SAV.
 
-Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. Même identité de marque que [TECHNILIUM-WEB-STORE](https://github.com/Yamoon224/TECHNILIUM-WEB-STORE) (palette noir/or extraite du logo), dupliquée à l'identique par choix - pas de package de design partagé.
+Application NextJS **totalement autonome** : ses propres dépendances, son propre `src/components` et `src/lib`, rien d'importé depuis un autre dépôt. Même identité de marque que [TechLium-WEB-STORE](https://github.com/Yamoon224/TechLium-WEB-STORE) (palette noir/or extraite du logo), dupliquée à l'identique par choix - pas de package de design partagé.
 
-Dépôts liés : [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BACKEND) (API) · [TECHNILIUM-WEB-STORE](https://github.com/Yamoon224/TECHNILIUM-WEB-STORE) (vitrine)
+Dépôts liés : [TechLium-BACKEND](https://github.com/Yamoon224/TechLium-BACKEND) (API) · [TechLium-WEB-STORE](https://github.com/Yamoon224/TechLium-WEB-STORE) (vitrine)
 
 ## Stack
 
@@ -15,7 +15,7 @@ Dépôts liés : [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BA
 
 ## Démarrage rapide
 
-Nécessite le backend [TECHNILIUM-BACKEND](https://github.com/Yamoon224/TECHNILIUM-BACKEND) démarré sur `http://localhost:8000`.
+Nécessite le backend [TechLium-BACKEND](https://github.com/Yamoon224/TechLium-BACKEND) démarré sur `http://localhost:8000`.
 
 ```bash
 npm install
@@ -23,7 +23,7 @@ cp .env.example .env
 npm run dev            # http://localhost:3001
 ```
 
-Compte de démonstration (créé par le seed du backend) : `admin@technilium.app` / `password`.
+Compte de démonstration (créé par le seed du backend) : `admin@TechLium.app` / `password`.
 
 ## Qualité
 
@@ -44,7 +44,7 @@ npm run test
 - `/factures` - factures et avoirs : liste, émission depuis un numéro de commande, avoir total avec motif, émission automatique à la confirmation de la commande (l'émission manuelle reste possible), téléchargement du PDF de chaque document (rôles `comptable` / `administrateur`).
 - `/comptabilite` - balance générale (alerte si déséquilibrée) et écritures par journal, en lecture seule.
 - `/reversements` - reversements vendeurs : calcul par vendeur (ventes livrées hors délai de retour, moins commission), relevé détaillé par commande, enregistrement du paiement avec référence, total restant dû.
-- `/rapports` - section **Marge de Technilium** (ventes en propre livrées, HT, remises comprises, hors vendeurs tiers : CA, coût des ventes, marge, taux, détail par produit, alerte si un coût manque, export CSV) et tableau de bord direction sur une période au choix (CA, commandes, panier moyen, graphique des ventes par jour avec vue tableau, meilleurs produits, finance, retours, alertes), ventes par vendeur et export CSV. Réservé aux rôles `administrateur` et `comptable`.
+- `/rapports` - section **Marge de TechLium** (ventes en propre livrées, HT, remises comprises, hors vendeurs tiers : CA, coût des ventes, marge, taux, détail par produit, alerte si un coût manque, export CSV) et tableau de bord direction sur une période au choix (CA, commandes, panier moyen, graphique des ventes par jour avec vue tableau, meilleurs produits, finance, retours, alertes), ventes par vendeur et export CSV. Réservé aux rôles `administrateur` et `comptable`.
 - `/promotions` - codes promotionnels : création (pourcentage ou montant fixe, minimum, plafonds, dates), état (actif / programmé / expiré / épuisé), activation et désactivation. Réservé à `marketing` et `administrateur`. La remise apparaît aussi sur les factures et dans la liste des commandes.
 - `/notifications` - journal des messages envoyés aux clients (événement, canal, destinataire, texte, statut, essais, erreur), filtre par statut ou commande, relance des envois en échec. Réservé à `support` et `administrateur`.
 - `/audit` - journal d'audit des actions backoffice (utilisateur, action, résultat, IP, données envoyées avec secrets masqués), filtres (utilisateur, méthode, chemin, échecs seulement, période) et bouton **Vérifier l'intégrité** de la chaîne de signatures. Réservé à `administrateur`.

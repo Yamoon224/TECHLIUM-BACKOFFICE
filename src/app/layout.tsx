@@ -19,8 +19,8 @@ const plexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Technilium Backoffice",
-  description: "Gestion du catalogue, des commandes, des stocks et des vendeurs Technilium.",
+  title: "TechLium Backoffice",
+  description: "Gestion du catalogue, des commandes, des stocks et des vendeurs TechLium.",
 };
 
 export const viewport: Viewport = {

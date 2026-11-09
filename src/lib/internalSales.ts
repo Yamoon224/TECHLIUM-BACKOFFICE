@@ -87,7 +87,7 @@ export async function recordInternalSale(token: string, input: SaleInput): Promi
   return response.json() as Promise<InternalSale>;
 }
 
-/** An item of Technilium's own stock that can be rung up. */
+/** An item of TechLium's own stock that can be rung up. */
 export interface SellableOffer {
   offerId: number;
   label: string;
@@ -103,7 +103,7 @@ interface CatalogProduct {
     sku?: string | null;
     offers?: {
       id: number;
-      seller: "technilium" | "vendor";
+      seller: "TechLium" | "vendor";
       price: { amount: number; currency: string };
       stock_quantity: number;
       in_stock: boolean;
@@ -116,7 +116,7 @@ export function sellableOffers(products: CatalogProduct[]): SellableOffer[] {
   return products.flatMap((product) =>
     (product.variants ?? []).flatMap((variant) =>
       (variant.offers ?? [])
-        .filter((offer) => offer.seller === "technilium" && offer.in_stock && offer.stock_quantity > 0)
+        .filter((offer) => offer.seller === "TechLium" && offer.in_stock && offer.stock_quantity > 0)
         .map((offer) => ({
           offerId: offer.id,
           label: `${product.brand} ${product.name}`.trim() + (variant.sku ? ` (${variant.sku})` : ""),

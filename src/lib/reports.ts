@@ -125,7 +125,7 @@ export async function downloadSalesCsv(token: string, period: Period): Promise<v
   URL.revokeObjectURL(url);
 }
 
-/* ---------------------------- Technilium's margin ---------------------------- */
+/* ---------------------------- TechLium's margin ---------------------------- */
 
 export interface MarginRow {
   units: number;

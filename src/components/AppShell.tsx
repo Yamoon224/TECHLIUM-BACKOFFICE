@@ -147,7 +147,7 @@ function Brand({ collapsed }: { collapsed: boolean }) {
       <Image src="/icon-192.png" alt="" width={40} height={40} priority className="h-10 w-10 shrink-0 rounded-md" />
       {collapsed ? null : (
         <span className="flex flex-col leading-tight">
-          <span className="font-display text-base font-semibold">Technilium</span>
+          <span className="font-display text-base font-semibold">TechLium</span>
           <span className="text-xs opacity-70">{t("shell.workspace")}</span>
         </span>
       )}

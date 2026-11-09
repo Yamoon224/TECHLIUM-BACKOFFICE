@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { hasSplit, historyLine, sellerLabel } from "./orders";
 
 describe("sub-order helpers", () => {
-  it("labels Technilium's own stock and vendors", () => {
-    expect(sellerLabel({ vendor_id: null })).toBe("Technilium");
+  it("labels TechLium's own stock and vendors", () => {
+    expect(sellerLabel({ vendor_id: null })).toBe("TechLium");
     expect(sellerLabel({ vendor_id: 12 })).toBe("Vendeur #12");
   });
 
