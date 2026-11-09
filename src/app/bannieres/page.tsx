@@ -26,6 +26,8 @@ import {
 const PLACEMENTS: { value: BannerPlacement; title: string; help: string }[] = [
   { value: "hero", title: "Bannière du haut de l'accueil", help: "Les images défilent à la place du bloc orange, en haut de la page d'accueil." },
   { value: "footer", title: "Bannière avant le pied de page", help: "Les images défilent sur toutes les pages, juste avant le pied de page." },
+  { value: "left", title: "Bannière verticale gauche", help: "Affichée dans la marge gauche des grands écrans (2xl et plus), sur toutes les pages. Format vertical conseillé : 300 × 900 px." },
+  { value: "right", title: "Bannière verticale droite", help: "Affichée dans la marge droite des grands écrans (2xl et plus), sur toutes les pages. Format vertical conseillé : 300 × 900 px." },
 ];
 
 export default function BannersPage() {

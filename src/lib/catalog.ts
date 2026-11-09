@@ -284,7 +284,7 @@ export async function removeProductImage(token: string, id: number, imageId: num
 
 // ------------------------------------------------------------------ banners
 
-export type BannerPlacement = "hero" | "footer";
+export type BannerPlacement = "hero" | "footer" | "left" | "right";
 
 export interface Banner {
   id: number;
