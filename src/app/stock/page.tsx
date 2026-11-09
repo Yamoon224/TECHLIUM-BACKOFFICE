@@ -241,6 +241,8 @@ function HistoryModal({ token, product, onClose }: { token: string; product: Sto
   const { tr } = useAppearance();
   const [movements, setMovements] = useState<StockMovement[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
 
@@ -269,13 +271,13 @@ function HistoryModal({ token, product, onClose }: { token: string; product: Sto
 
   useEffect(() => {
     let cancelled = false;
-    listMovements(token, product.offer_id)
+    listMovements(token, product.offer_id, { from, to })
       .then((list) => !cancelled && setMovements(list))
       .catch((caught) => !cancelled && setError(caught instanceof InventoryError ? caught.message : tr("Historique indisponible.")));
     return () => {
       cancelled = true;
     };
-  }, [token, product.offer_id, tr]);
+  }, [token, product.offer_id, from, to, tr]);
 
   return (
     <Modal
@@ -321,12 +323,35 @@ function HistoryModal({ token, product, onClose }: { token: string; product: Sto
         </>
       }
     >
+      <div className="mb-4 flex flex-wrap items-end gap-3">
+        <label className="field">
+          <input type="date" value={from} max={to || undefined} onChange={(event) => setFrom(event.target.value)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink" />
+          <span className="field-label">{tr("Date de début")}</span>
+        </label>
+        <label className="field">
+          <input type="date" value={to} min={from || undefined} onChange={(event) => setTo(event.target.value)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink" />
+          <span className="field-label">{tr("Date de fin")}</span>
+        </label>
+        {from || to ? (
+          <button
+            type="button"
+            onClick={() => {
+              setFrom("");
+              setTo("");
+            }}
+            className="rounded-sm border border-line px-3 py-2 text-sm text-ink transition-colors hover:border-gold"
+          >
+            <ActionLabel text={tr("Réinitialiser les dates")} />
+          </button>
+        ) : null}
+      </div>
+
       {error ? (
         <p className="text-sm text-danger">{error}</p>
       ) : movements === null ? (
         <p className="text-sm text-ink-soft">{tr("Chargement…")}</p>
       ) : movements.length === 0 ? (
-        <p className="text-sm text-ink-soft">{tr("Aucun mouvement enregistré.")}</p>
+        <p className="text-sm text-ink-soft">{from || to ? tr("Aucun mouvement sur cette période.") : tr("Aucun mouvement enregistré.")}</p>
       ) : (
         <table className="w-full text-left text-sm">
           <thead>

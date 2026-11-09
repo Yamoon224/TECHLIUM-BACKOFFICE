@@ -467,6 +467,7 @@ export const PHRASES_EN: Record<string, string> = {
   "Historique du stock": "Stock history",
   "Historique indisponible.": "History unavailable.",
   "Exporter": "Export",
+  "Aucun mouvement sur cette période.": "No movement in this period.",
   "Livreur": "Courier",
   "Vente": "Sale",
   "Payée": "Paid",

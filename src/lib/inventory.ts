@@ -53,8 +53,18 @@ export async function listActiveStock(token: string): Promise<StockProduct[]> {
   return response.json() as Promise<StockProduct[]>;
 }
 
-export async function listMovements(token: string, offerId?: number): Promise<StockMovement[]> {
-  const params = offerId ? `?offer_id=${offerId}&per_page=200` : "?per_page=200";
+/** YYYY-MM-DD bounds, inclusive; either may be empty. */
+export interface MovementPeriod {
+  from?: string;
+  to?: string;
+}
+
+export async function listMovements(token: string, offerId?: number, period: MovementPeriod = {}): Promise<StockMovement[]> {
+  const query = new URLSearchParams({ per_page: "200" });
+  if (offerId) query.set("offer_id", String(offerId));
+  if (period.from) query.set("from", period.from);
+  if (period.to) query.set("to", period.to);
+  const params = `?${query.toString()}`;
   const response = await fetch(`${API_BASE_URL}/admin/stock/movements${params}`, {
     headers: authHeaders(token),
     cache: "no-store",
