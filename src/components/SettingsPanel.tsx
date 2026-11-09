@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { Check, LayoutPanelTop, PanelLeft, Plus, RotateCcw, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -250,7 +251,7 @@ function BackgroundPicker({
           aria-pressed={current === null}
           className={`rounded-full px-2.5 py-0.5 text-xs ${current === null ? "bg-gold/20 text-gold-bright" : "text-ink-soft hover:text-ink"}`}
         >
-          {t("settings.default")}
+          <ActionLabel text={t("settings.default")} />
         </button>
       </div>
 

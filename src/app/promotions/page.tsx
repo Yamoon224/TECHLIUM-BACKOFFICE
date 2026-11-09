@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -140,7 +141,7 @@ export default function PromotionsPage() {
                         onClick={() => handleToggle(coupon)}
                         className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold disabled:opacity-50"
                       >
-                        {coupon.active ? tr("Désactiver") : tr("Réactiver")}
+                        {coupon.active ? <ActionLabel text={tr("Désactiver")} /> : <ActionLabel text={tr("Réactiver")} />}
                       </button>
                     </td>
                   </tr>
@@ -302,7 +303,7 @@ function NewCouponForm({ onSubmit }: { onSubmit: (input: NewCouponInput) => Prom
         <span className="field-label">{tr("Fin")}</span>
       </label>
       <Button type="submit" disabled={submitting}>
-        {tr("Créer le code")}
+        <ActionLabel text={tr("Créer le code")} />
       </Button>
       {formError ? <p className="w-full text-sm text-danger">{formError}</p> : null}
     </form>

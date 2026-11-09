@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -105,7 +106,7 @@ export function ResetPasswordForm() {
               disabled={submitting}
               className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-on-primary transition-colors hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? tr("Un instant…") : tr("Changer le mot de passe")}
+              {submitting ? <ActionLabel text={tr("Un instant…")} /> : <ActionLabel text={tr("Changer le mot de passe")} />}
             </button>
           </form>
         )}

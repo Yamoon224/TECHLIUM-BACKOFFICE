@@ -75,7 +75,8 @@ export function searchKey(text: string): string {
 
 /**
  * Rows (by index) with at least one of the given columns containing every word
- * of the query, in any order. An empty query keeps every row.
+ * of the query, in any order. An empty query keeps every row. A word with digits also
+ * matches across thousands separators, so "118000" finds "118 000 F CFA".
  */
 export function matchingIndexes(values: readonly (readonly string[])[], columns: readonly number[], query: string): number[] {
   const words = searchKey(query).split(" ").filter(Boolean);
@@ -84,7 +85,9 @@ export function matchingIndexes(values: readonly (readonly string[])[], columns:
 
   return indexes.filter((index) => {
     const haystack = columns.map((column) => searchKey(values[index][column] ?? "")).join(" ");
-    return words.every((word) => haystack.includes(word));
+    // Amounts are shown with thousands separators ("118 000"): "118000" must find them too.
+    const compact = haystack.replace(/ /g, "");
+    return words.every((word) => haystack.includes(word) || (/\d/.test(word) && compact.includes(word)));
   });
 }
 

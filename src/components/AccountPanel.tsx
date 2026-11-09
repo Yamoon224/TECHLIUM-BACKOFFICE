@@ -1,3 +1,4 @@
+import { ActionLabel } from "@/components/ActionLabel";
 import type { User } from "@/lib/auth";
 import { useAppearance } from "./AppearanceProvider";
 import { ROLE_LABEL } from "@/lib/roles";
@@ -30,7 +31,7 @@ export function AccountPanel({ user, onLogout }: { user: User; onLogout: () => v
         onClick={onLogout}
         className="rounded-sm border border-line px-4 py-2 text-sm text-ink transition-colors hover:border-gold"
       >
-        {t("shell.logout")}
+        <ActionLabel text={t("shell.logout")} />
       </button>
     </div>
   );

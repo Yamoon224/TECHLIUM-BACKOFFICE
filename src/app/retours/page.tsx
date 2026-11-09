@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { FormModal } from "@/components/Modal";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -124,7 +125,7 @@ export default function ReturnsPage() {
       <main className="flex w-full flex-1 flex-col gap-6 px-4 py-8">
         <div className="flex items-center justify-between">
           <h1 className="page-title font-display text-2xl font-semibold text-ink">{tr("Retours et SAV")}</h1>
-          <Button onClick={() => setShowNew(true)}>{tr("Nouveau retour")}</Button>
+          <Button onClick={() => setShowNew(true)}><ActionLabel text={tr("Nouveau retour")} /></Button>
         </div>
 
         {showNew ? (
@@ -150,7 +151,7 @@ export default function ReturnsPage() {
                   : "border-line text-ink hover:border-gold"
               }`}
             >
-              {value === null ? tr("Tous") : RETURN_STATUS_LABEL[value]}
+              {value === null ? <ActionLabel text={tr("Tous")} /> : RETURN_STATUS_LABEL[value]}
             </button>
           ))}
         </nav>

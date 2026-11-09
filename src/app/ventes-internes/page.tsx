@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { ActionLabel } from "@/components/ActionLabel";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
 import { Button } from "@/components/Button";
+import { Modal } from "@/components/Modal";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { openPdf, savePdf, withLanguage } from "@/lib/download";
@@ -47,6 +49,7 @@ export default function InternalSalesPage() {
   const { status: sessionStatus, token, logout } = useAuth();
 
   const [sales, setSales] = useState<InternalSale[]>([]);
+  const [details, setDetails] = useState<InternalSale | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [search, setSearch] = useState("");
@@ -268,13 +271,13 @@ export default function InternalSalesPage() {
             ) : null}
             <div className="flex flex-wrap gap-2">
               <Button type="button" onClick={() => receipt(completed)}>
-                {tr("Télécharger le reçu (PDF)")}
+                <ActionLabel text={tr("Télécharger le reçu (PDF)")} />
               </Button>
               <Button type="button" variant="secondary" onClick={() => receipt(completed, "ticket")}>
-                {tr("Ticket 80 mm")}
+                <ActionLabel text={tr("Ticket 80 mm")} />
               </Button>
               <Button type="button" variant="secondary" onClick={() => setCompleted(null)}>
-                {tr("Nouvelle vente")}
+                <ActionLabel text={tr("Nouvelle vente")} />
               </Button>
             </div>
           </section>
@@ -296,7 +299,7 @@ export default function InternalSalesPage() {
                   <span className="field-label">{tr("Rechercher un produit")}</span>
                 </label>
                 <Button type="submit" variant="secondary" disabled={searching}>
-                  {tr("Rechercher")}
+                  <ActionLabel text={tr("Rechercher")} />
                 </Button>
               </form>
 
@@ -311,7 +314,7 @@ export default function InternalSalesPage() {
                         </span>
                       </span>
                       <Button type="button" variant="secondary" onClick={() => setCart((current) => addToCart(current, offer))}>
-                        {tr("Ajouter")}
+                        <ActionLabel text={tr("Ajouter")} />
                       </Button>
                     </li>
                   ))}
@@ -452,7 +455,7 @@ export default function InternalSalesPage() {
 
               <div>
                 <Button type="submit" disabled={submitting || cart.length === 0}>
-                  {tr("Encaisser et délivrer le reçu")}
+                  <ActionLabel text={tr("Encaisser et délivrer le reçu")} />
                 </Button>
               </div>
             </form>
@@ -493,7 +496,7 @@ export default function InternalSalesPage() {
                   <span className="field-label">{tr("Note (facultatif)")}</span>
                 </label>
                 <Button type="submit" disabled={closing}>
-                  {tr("Clôturer la caisse")}
+                  <ActionLabel text={tr("Clôturer la caisse")} />
                 </Button>
               </form>
               {countedAmount !== null ? (
@@ -527,7 +530,7 @@ export default function InternalSalesPage() {
                         onClick={() => token && savePdf(token, withLanguage(closingPdfPath(row.id), appearance.language), `${row.number}.pdf`).catch(showError)}
                         className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                       >
-                        {tr("Rapport PDF")}
+                        <ActionLabel text={tr("Rapport PDF")} />
                       </button>
                     </td>
                   </tr>
@@ -557,6 +560,13 @@ export default function InternalSalesPage() {
                     <td className="py-3 pr-4 text-ink-soft">{sale.payment?.receipt_number ?? "-"}</td>
                     <td className="py-3">
                       <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setDetails(sale)}
+                          className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
+                        >
+                          <ActionLabel text={tr("Détails")} />
+                        </button>
                         {sale.payment ? (
                           <>
                             <button
@@ -564,14 +574,14 @@ export default function InternalSalesPage() {
                               onClick={() => receipt(sale)}
                               className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                             >
-                              {tr("Reçu de paiement")}
+                              <ActionLabel text={tr("Reçu de paiement")} />
                             </button>
                             <button
                               type="button"
                               onClick={() => receipt(sale, "ticket")}
                               className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                             >
-                              {tr("Ticket 80 mm")}
+                              <ActionLabel text={tr("Ticket 80 mm")} />
                             </button>
                           </>
                         ) : null}
@@ -585,7 +595,7 @@ export default function InternalSalesPage() {
                             onClick={() => handleCancel(sale)}
                             className="rounded-sm border border-danger px-2 py-1 text-xs text-danger transition-colors"
                           >
-                            {tr("Annuler la vente")}
+                            <ActionLabel text={tr("Annuler la vente")} />
                           </button>
                         )}
                       </div>
@@ -597,6 +607,75 @@ export default function InternalSalesPage() {
           )}
         </section>
       </main>
+
+      <Modal
+        open={details !== null}
+        title={details ? `${tr("Vente")} ${details.order_number}` : ""}
+        onClose={() => setDetails(null)}
+        footer={
+          <Button type="button" variant="secondary" onClick={() => setDetails(null)}>
+            <ActionLabel text={tr("Fermer")} />
+          </Button>
+        }
+      >
+        {details ? <SaleDetails sale={details} /> : null}
+      </Modal>
+    </div>
+  );
+}
+
+function SaleDetails({ sale }: { sale: InternalSale }) {
+  const { tr } = useAppearance();
+  const payment = sale.payment;
+  const rows: [string, string][] = [
+    [tr("Statut"), sale.cancelled_at ? tr("Annulée") : tr("Payée")],
+    [tr("Client"), [sale.customer_name, sale.customer_phone].filter(Boolean).join(" - ") || "-"],
+    [tr("Date"), sale.created_at ? new Date(sale.created_at).toLocaleString("fr-FR") : "-"],
+    [tr("Paiement"), payment?.method === "mobile_money" ? tr("Mobile money") : tr("Espèces")],
+  ];
+  if (payment?.provider) rows.push([tr("Opérateur"), payment.provider]);
+  if (payment) rows.push([tr("N° de reçu"), payment.receipt_number]);
+  if (payment?.tendered_amount != null) rows.push([tr("Montant remis"), money(payment.tendered_amount)]);
+  if (payment?.change_amount != null) rows.push([tr("Monnaie rendue"), money(payment.change_amount)]);
+  if (sale.cancelled_at) {
+    rows.push([tr("Annulée le"), new Date(sale.cancelled_at).toLocaleString("fr-FR")]);
+    if (sale.cancel_reason) rows.push([tr("Motif"), sale.cancel_reason]);
+  }
+
+  return (
+    <div className="grid gap-4 text-sm">
+      <dl className="grid grid-cols-[9rem_1fr] gap-x-3 gap-y-2">
+        {rows.map(([label, value]) => (
+          <Fragment key={label}>
+            <dt className="text-ink-soft">{label}</dt>
+            <dd className="text-ink">{value}</dd>
+          </Fragment>
+        ))}
+      </dl>
+      <table className="w-full text-left">
+        <thead>
+          <tr className="border-b border-line text-xs text-ink-soft">
+            <th className="py-1 pr-2 font-medium">{tr("Produit")}</th>
+            <th className="py-1 pr-2 font-medium">{tr("Qté")}</th>
+            <th className="py-1 pr-2 font-medium">{tr("Prix unitaire")}</th>
+            <th className="py-1 text-right font-medium">{tr("Total")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sale.lines.map((line, index) => (
+            <tr key={`${line.description}-${index}`} className="border-b border-line">
+              <td className="py-1 pr-2 text-ink">{line.description}</td>
+              <td className="py-1 pr-2 text-ink">{line.quantity}</td>
+              <td className="py-1 pr-2 text-ink">{money(line.unit_price_amount)}</td>
+              <td className="py-1 text-right text-ink">{money(line.line_total_amount)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="text-right font-medium text-ink">
+        {tr("Total")} : {money(sale.total_amount)}
+        {sale.discount_amount > 0 ? ` (${tr("Remise")} ${money(sale.discount_amount)}${sale.coupon_code ? `, ${sale.coupon_code}` : ""})` : ""}
+      </p>
     </div>
   );
 }

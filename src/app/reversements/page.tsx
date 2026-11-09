@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { Fragment, useCallback, useEffect, useState } from "react";
@@ -151,7 +152,7 @@ export default function PayoutsPage() {
             <span className="field-label">{tr("Vendeur")}</span>
           </label>
           <Button type="submit" disabled={busy || !vendorId}>
-            {tr("Calculer le reversement")}
+            <ActionLabel text={tr("Calculer le reversement")} />
           </Button>
           <p className="w-full text-xs text-ink-soft">
             {tr(
@@ -195,7 +196,7 @@ export default function PayoutsPage() {
                               onClick={() => handleDetail(payout)}
                               className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                             >
-                              {tr("Relevé")}
+                              <ActionLabel text={tr("Relevé")} />
                             </button>
                             {payout.status === "pending" ? (
                               <button
@@ -204,7 +205,7 @@ export default function PayoutsPage() {
                                 onClick={() => handlePay(payout)}
                                 className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                               >
-                                {tr("Marquer payé")}
+                                <ActionLabel text={tr("Marquer payé")} />
                               </button>
                             ) : null}
                           </div>

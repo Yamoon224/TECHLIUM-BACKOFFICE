@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { FormModal } from "@/components/Modal";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -101,7 +102,7 @@ export default function ShipmentsPage() {
       <main className="flex w-full flex-1 flex-col gap-6 px-4 py-8">
         <div className="flex items-center justify-between">
           <h1 className="page-title font-display text-2xl font-semibold text-ink">{tr("Livraisons")}</h1>
-          <Button onClick={() => setShowNew(true)}>{tr("Nouvelle livraison")}</Button>
+          <Button onClick={() => setShowNew(true)}><ActionLabel text={tr("Nouvelle livraison")} /></Button>
         </div>
 
         {showNew ? (
@@ -325,7 +326,7 @@ function AssignForm({ onAssign }: { onAssign: (assignedTo: number) => void }) {
         }}
         className="rounded-sm border border-line px-2 py-1 text-xs text-ink hover:border-gold"
       >
-        {tr("Assigner")}
+        <ActionLabel text={tr("Assigner")} />
       </button>
       {open ? (
         <FormModal
@@ -367,7 +368,7 @@ function FailForm({ onFail }: { onFail: (notes?: string) => void }) {
         }}
         className="rounded-sm border border-danger px-2 py-1 text-xs text-danger"
       >
-        {tr("Échec de livraison")}
+        <ActionLabel text={tr("Échec de livraison")} />
       </button>
       {open ? (
         <FormModal

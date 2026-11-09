@@ -152,6 +152,13 @@ describe("exports", () => {
 });
 
 describe("matchingIndexes", () => {
+  it("finds an amount typed without its thousands separators", () => {
+    const amounts = [["CMD-1", "118 000 F CFA"], ["CMD-2", "5 500 F CFA"]];
+    expect(matchingIndexes(amounts, [0, 1], "118000")).toEqual([0]);
+    expect(matchingIndexes(amounts, [0, 1], "118 000")).toEqual([0]);
+    expect(matchingIndexes(amounts, [0, 1], "5500")).toEqual([1]);
+  });
+
   const values = [
     ["CMD-1", "Électro Kouassi", "12 000 F CFA"],
     ["CMD-2", "Awa Traoré", "9 500 F CFA"],

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -162,7 +163,7 @@ export default function AnnouncementsPage() {
               setForm("new");
             }}
           >
-            {tr("Nouvelle annonce")}
+            <ActionLabel text={tr("Nouvelle annonce")} />
           </Button>
         </div>
 
@@ -185,7 +186,7 @@ export default function AnnouncementsPage() {
               onClick={() => setTab(mode)}
               className={`rounded-sm border px-3 py-1 text-xs transition-colors ${tab === mode ? "border-gold text-gold" : "border-line text-ink hover:border-gold"}`}
             >
-              {mode === "current" ? tr("Annonces") : tr("Historique (archivées)")} ({announcements.filter((item) => (item.archived_at !== null) === (mode === "archived")).length})
+              {mode === "current" ? <ActionLabel text={tr("Annonces")} /> : <ActionLabel text={tr("Historique (archivées)")} />} ({announcements.filter((item) => (item.archived_at !== null) === (mode === "archived")).length})
             </button>
           ))}
         </div>
@@ -221,7 +222,7 @@ export default function AnnouncementsPage() {
                     <div className="flex flex-wrap gap-2">
                       {announcement.archived_at ? (
                         <button type="button" className={BUTTON_CLASS} onClick={() => handleArchive(announcement, false)}>
-                          {tr("Restaurer")}
+                          <ActionLabel text={tr("Restaurer")} />
                         </button>
                       ) : (
                         <>
@@ -233,13 +234,13 @@ export default function AnnouncementsPage() {
                               setForm(announcement.id);
                             }}
                           >
-                            {tr("Modifier")}
+                            <ActionLabel text={tr("Modifier")} />
                           </button>
                           <button type="button" className={BUTTON_CLASS} onClick={() => handleToggle(announcement)}>
-                            {announcement.is_active ? tr("Désactiver") : tr("Réactiver")}
+                            {announcement.is_active ? <ActionLabel text={tr("Désactiver")} /> : <ActionLabel text={tr("Réactiver")} />}
                           </button>
                           <button type="button" className={BUTTON_CLASS} onClick={() => handleArchive(announcement, true)}>
-                            {tr("Archiver")}
+                            <ActionLabel text={tr("Archiver")} />
                           </button>
                         </>
                       )}
@@ -248,7 +249,7 @@ export default function AnnouncementsPage() {
                         onClick={() => handleDelete(announcement)}
                         className="rounded-sm border border-line px-2 py-1 text-xs text-danger transition-colors hover:border-danger"
                       >
-                        {tr("Supprimer")}
+                        <ActionLabel text={tr("Supprimer")} />
                       </button>
                     </div>
                   </td>

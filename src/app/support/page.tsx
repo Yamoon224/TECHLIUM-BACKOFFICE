@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { Fragment, useCallback, useEffect, useState } from "react";
@@ -115,7 +116,7 @@ export default function SupportPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <button type="button" onClick={() => setFilters({})} className={pill(Object.keys(filters).length === 0)}>
-            {tr("Tous")}
+            <ActionLabel text={tr("Tous")} />
           </button>
           {STATUSES.map((status) => (
             <button
@@ -132,21 +133,21 @@ export default function SupportPage() {
             onClick={() => setFilters({ overdue: true })}
             className={pill(filters.overdue === true)}
           >
-            {tr("En retard")}
+            <ActionLabel text={tr("En retard")} />
           </button>
           <button
             type="button"
             onClick={() => setFilters({ assigned: "me" })}
             className={pill(filters.assigned === "me")}
           >
-            {tr("Mes tickets")}
+            <ActionLabel text={tr("Mes tickets")} />
           </button>
           <button
             type="button"
             onClick={() => setFilters({ assigned: "none" })}
             className={pill(filters.assigned === "none")}
           >
-            {tr("Non assignés")}
+            <ActionLabel text={tr("Non assignés")} />
           </button>
           <label className="field w-56">
             <input
@@ -262,7 +263,7 @@ function TicketPanel({
             )
           }
         >
-          {ticket.assigned_to === null ? tr("Prendre") : tr("Libérer")}
+          {ticket.assigned_to === null ? <ActionLabel text={tr("Prendre")} /> : <ActionLabel text={tr("Libérer")} />}
         </button>
 
         <label className="field items-center">
@@ -354,7 +355,7 @@ function TicketPanel({
               disabled={busy || !body.trim()}
               className="rounded-sm border border-gold px-3 py-1.5 text-sm text-gold transition-colors disabled:opacity-50"
             >
-              {internal ? tr("Ajouter la note") : tr("Répondre")}
+              {internal ? <ActionLabel text={tr("Ajouter la note")} /> : <ActionLabel text={tr("Répondre")} />}
             </button>
             <label className="flex items-center gap-2 text-xs text-ink-soft">
               <input type="checkbox" checked={internal} onChange={(event) => setInternal(event.target.checked)} />

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useEffect, useState } from "react";
@@ -143,7 +144,7 @@ export default function ReportsPage() {
               <span className="field-label">{tr("Au")}</span>
             </label>
             <Button type="submit" disabled={!isValidPeriod(draft)}>
-              {tr("Appliquer")}
+              <ActionLabel text={tr("Appliquer")} />
             </Button>
             <button
               type="button"
@@ -151,7 +152,7 @@ export default function ReportsPage() {
               disabled={exporting}
               className="rounded-sm border border-line px-3 py-2 text-sm text-ink transition-colors hover:border-gold disabled:opacity-50"
             >
-              {tr("Exporter les ventes (CSV)")}
+              <ActionLabel text={tr("Exporter les ventes (CSV)")} />
             </button>
           </form>
         </div>
@@ -354,7 +355,7 @@ function SalesChart({ days }: { days: { date: string; orders: number; revenue: n
             onClick={() => setShowTable((current) => !current)}
             className="text-xs text-gold underline-offset-4 hover:underline"
           >
-            {showTable ? tr("Voir le graphique") : tr("Voir le tableau")}
+            {showTable ? <ActionLabel text={tr("Voir le graphique")} /> : <ActionLabel text={tr("Voir le tableau")} />}
           </button>
         ) : null}
       </div>
@@ -440,7 +441,7 @@ function MarginSection({ token, period }: { token: string; period: Period }) {
           }
           className="rounded-sm border border-line px-3 py-2 text-sm text-ink transition-colors hover:border-gold"
         >
-          {tr("Exporter la marge (CSV)")}
+          <ActionLabel text={tr("Exporter la marge (CSV)")} />
         </button>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { useAppearance } from "./AppearanceProvider";
@@ -68,7 +69,7 @@ export function LoginForm({ onSubmit, submitting, error }: LoginFormProps) {
         disabled={submitting}
         className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-on-primary transition-colors hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {submitting ? t("login.submitting") : t("login.submit")}
+        {submitting ? <ActionLabel text={t("login.submitting")} /> : <ActionLabel text={t("login.submit")} />}
       </button>
     </form>
   );

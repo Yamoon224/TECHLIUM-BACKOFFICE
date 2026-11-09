@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { ArrowDown, ArrowUp, Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
@@ -122,7 +123,7 @@ export default function BannersPage() {
                       setAdding(value);
                     }}
                   >
-                    {tr("Ajouter")}
+                    <ActionLabel text={tr("Ajouter")} />
                   </Button>
                 ) : null}
               </div>
@@ -233,11 +234,14 @@ function SlideRow({
           type="button"
           className={iconButton}
           onClick={onToggle}
-          title={slide.is_active ? tr("Masquer") : tr("Afficher")}
-          aria-label={slide.is_active ? tr("Masquer") : tr("Afficher")}
+          title={slide.is_active ? tr("Désactiver") : tr("Activer")}
+          aria-label={slide.is_active ? tr("Désactiver") : tr("Activer")}
         >
           {slide.is_active ? <Eye className="h-4 w-4" aria-hidden /> : <EyeOff className="h-4 w-4" aria-hidden />}
         </button>
+        <span className={`rounded-full px-2 py-0.5 text-xs ${slide.is_active ? "bg-gold/15 text-ink" : "bg-line text-ink-soft"}`}>
+          {slide.is_active ? tr("Active") : tr("Inactive")}
+        </span>
         <button type="button" className={`${iconButton} text-danger`} onClick={onDelete} title={tr("Supprimer")} aria-label={tr("Supprimer")}>
           <Trash2 className="h-4 w-4" aria-hidden />
         </button>

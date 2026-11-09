@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { Fragment, useCallback, useEffect, useState } from "react";
@@ -99,7 +100,7 @@ export default function AuditPage() {
             disabled={verifying}
             className="rounded-sm border border-gold px-3 py-2 text-sm text-gold transition-colors disabled:opacity-50"
           >
-            {verifying ? tr("Vérification…") : tr("Vérifier l'intégrité")}
+            {verifying ? <ActionLabel text={tr("Vérification…")} /> : <ActionLabel text={tr("Vérifier l'intégrité")} />}
           </button>
         </div>
 
@@ -183,7 +184,7 @@ export default function AuditPage() {
             />
             {tr("Échecs et refus seulement")}
           </label>
-          <Button type="submit">{tr("Filtrer")}</Button>
+          <Button type="submit"><ActionLabel text={tr("Filtrer")} /></Button>
         </form>
 
         {error ? <p className="text-sm text-danger">{error}</p> : null}
@@ -224,7 +225,7 @@ export default function AuditPage() {
                             onClick={() => setOpen(open === entry.id ? null : entry.id)}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                           >
-                            {tr("Données")}
+                            <ActionLabel text={tr("Données")} />
                           </button>
                         ) : null}
                       </td>

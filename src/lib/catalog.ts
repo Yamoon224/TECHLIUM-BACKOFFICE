@@ -160,6 +160,16 @@ export async function listProducts(token: string, page = 1): Promise<Paginated<P
   return response.json() as Promise<Paginated<Product>>;
 }
 
+/** Every product, page after page, so the table's search and sort cover the whole catalogue. */
+export async function listAllProducts(token: string): Promise<Product[]> {
+  const first = await listProducts(token, 1);
+  const products = [...first.data];
+  for (let page = 2; page <= first.meta.last_page; page += 1) {
+    products.push(...(await listProducts(token, page)).data);
+  }
+  return products;
+}
+
 export async function createProduct(token: string, input: ProductInput): Promise<Product> {
   const response = await fetch(`${API_BASE_URL}/admin/products`, {
     method: "POST",

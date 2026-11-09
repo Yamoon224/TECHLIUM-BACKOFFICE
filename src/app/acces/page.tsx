@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -207,7 +208,7 @@ function FeaturesTab({
                                 off ? "bg-red-600/15 text-danger" : "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400"
                               }`}
                             >
-                              {off ? tr("Désactivée") : tr("Activée")}
+                              {off ? <ActionLabel text={tr("Désactivée")} /> : <ActionLabel text={tr("Activée")} />}
                             </button>
                           ) : (
                             <span className="text-ink-soft" title={tr("Ce groupe n'a pas cette fonctionnalité")}>
@@ -364,7 +365,7 @@ function GroupsTab({ token, overview, onReload, onError }: { token: string; over
     <div className="flex flex-col gap-6">
       <div>
         <Button type="button" onClick={() => open("new")}>
-          {tr("Nouveau groupe")}
+          <ActionLabel text={tr("Nouveau groupe")} />
         </Button>
       </div>
 
@@ -400,10 +401,10 @@ function GroupsTab({ token, overview, onReload, onError }: { token: string; over
                 ) : (
                   <div className="flex gap-2">
                     <button type="button" onClick={() => open(group)} className="rounded-sm border border-gold px-2 py-1 text-xs text-gold">
-                      {tr("Modifier")}
+                      <ActionLabel text={tr("Modifier")} />
                     </button>
                     <button type="button" onClick={() => void remove(group)} className="rounded-sm border border-line px-2 py-1 text-xs text-ink-soft hover:border-danger hover:text-danger">
-                      {tr("Supprimer")}
+                      <ActionLabel text={tr("Supprimer")} />
                     </button>
                   </div>
                 )}
@@ -513,7 +514,7 @@ function UsersTab({
               <td className="py-3 pr-4 text-ink-soft">{Object.values(row.switches).filter((enabled) => !enabled).length}</td>
               <td className="py-3">
                 <button type="button" onClick={() => pick(row)} className="rounded-sm border border-gold px-2 py-1 text-xs text-gold">
-                  {tr("Gérer")}
+                  <ActionLabel text={tr("Gérer")} />
                 </button>
               </td>
             </tr>
@@ -536,7 +537,7 @@ function UsersTab({
               ))}
             </div>
             <Button type="button" className="mt-3" disabled={busy || roles.length === 0} onClick={() => void saveRoles(selected)}>
-              {tr("Enregistrer les groupes")}
+              <ActionLabel text={tr("Enregistrer les groupes")} />
             </Button>
           </div>
 

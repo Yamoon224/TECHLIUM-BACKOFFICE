@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { Dropzone } from "@/components/Dropzone";
 import { Download, ImageOff, QrCode } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -247,7 +248,7 @@ export function QrGenerator({
                 <Download className="h-4 w-4" aria-hidden /> SVG
               </Button>
               <Button type="button" variant="ghost" onClick={() => window.print()}>
-                {tr("Imprimer")}
+                <ActionLabel text={tr("Imprimer")} />
               </Button>
             </div>
           </>

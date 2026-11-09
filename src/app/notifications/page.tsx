@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -114,7 +115,7 @@ export default function NotificationsPage() {
                     : "border-line text-ink hover:border-gold"
                 }`}
               >
-                {value === null ? tr("Tous") : NOTIFICATION_STATUS_LABEL[value]}
+                {value === null ? <ActionLabel text={tr("Tous")} /> : NOTIFICATION_STATUS_LABEL[value]}
               </button>
             ))}
           </nav>
@@ -172,7 +173,7 @@ export default function NotificationsPage() {
                           onClick={() => handleRetry(item)}
                           className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                         >
-                          {tr("Relancer")}
+                          <ActionLabel text={tr("Relancer")} />
                         </button>
                       ) : null}
                     </td>

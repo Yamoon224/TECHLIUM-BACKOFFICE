@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { Fragment, useEffect, useState } from "react";
@@ -119,7 +120,7 @@ export default function AccountingPage() {
                   journal === code ? "border-gold bg-gold text-on-primary font-medium" : "border-line text-ink hover:border-gold"
                 }`}
               >
-                {code === null ? tr("Tous les journaux") : JOURNAL_LABEL[code]}
+                {code === null ? <ActionLabel text={tr("Tous les journaux")} /> : JOURNAL_LABEL[code]}
               </button>
             ))}
           </nav>

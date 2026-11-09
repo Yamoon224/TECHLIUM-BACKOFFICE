@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -112,7 +113,7 @@ export default function ReviewsPage() {
                 filter === value ? "border-gold bg-gold text-on-primary font-medium" : "border-line text-ink hover:border-gold"
               }`}
             >
-              {value === null ? tr("Tous") : REVIEW_STATUS_LABEL[value]}
+              {value === null ? <ActionLabel text={tr("Tous")} /> : REVIEW_STATUS_LABEL[value]}
             </button>
           ))}
         </nav>
@@ -156,7 +157,7 @@ export default function ReviewsPage() {
                           onClick={() => decide(review, "publish")}
                           className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                         >
-                          {review.status === "rejected" ? tr("Rétablir") : tr("Publier")}
+                          {review.status === "rejected" ? <ActionLabel text={tr("Rétablir")} /> : <ActionLabel text={tr("Publier")} />}
                         </button>
                       ) : null}
                       {canReject(review) ? (
@@ -166,7 +167,7 @@ export default function ReviewsPage() {
                           onClick={() => decide(review, "reject")}
                           className="rounded-sm border border-danger px-2 py-1 text-xs text-danger transition-colors disabled:opacity-50"
                         >
-                          {review.status === "published" ? tr("Retirer") : tr("Rejeter")}
+                          {review.status === "published" ? <ActionLabel text={tr("Retirer")} /> : <ActionLabel text={tr("Rejeter")} />}
                         </button>
                       ) : null}
                     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -108,7 +109,7 @@ export default function OfferModerationPage() {
                           onClick={() => handleDecision(offer.id, "approve")}
                           className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                         >
-                          {tr("Approuver")}
+                          <ActionLabel text={tr("Approuver")} />
                         </button>
                         <button
                           type="button"
@@ -116,7 +117,7 @@ export default function OfferModerationPage() {
                           onClick={() => handleDecision(offer.id, "reject")}
                           className="rounded-sm border border-danger px-2 py-1 text-xs text-danger transition-colors disabled:opacity-50"
                         >
-                          {tr("Rejeter")}
+                          <ActionLabel text={tr("Rejeter")} />
                         </button>
                       </div>
                     </td>

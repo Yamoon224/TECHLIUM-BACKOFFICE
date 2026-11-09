@@ -8,9 +8,10 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { fetchCurrentUser, logout as logoutRequest, TOKEN_STORAGE_KEY, type User } from "@/lib/auth";
 import { canSeeNotifications, isActive, isPageForbidden, navFor, shortcutsFor, type NavGroup, type NavItem } from "@/lib/navigation";
 import { listNotifications } from "@/lib/notifications";
-import { ROLE_LABEL } from "@/lib/roles";
+import { isVendorOnly, ROLE_LABEL } from "@/lib/roles";
 import { AUTH_CHANGED_EVENT } from "@/lib/useAuth";
 import { useAppearance } from "./AppearanceProvider";
+import { OrderAlerts } from "./OrderAlerts";
 import { AbilitiesContext } from "./QrLink";
 import { SettingsPanel } from "./SettingsPanel";
 
@@ -62,6 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, [readSession]);
 
   const token = session?.token ?? null;
+  const showOrderAlerts = session ? !isVendorOnly(session.user.roles) && (session.user.abilities === undefined || session.user.abilities.includes("manage-orders")) : false;
   const showBell = session ? canSeeNotifications(session.user.roles, session.user.abilities) : false;
 
   useEffect(() => {
@@ -123,6 +125,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           horizontal={!side}
           failedMessages={failedMessages}
           showBell={showBell}
+          orderToken={showOrderAlerts ? session.token : null}
           onToggleMenu={() => {
             if (window.matchMedia("(min-width: 1024px)").matches) return update({ collapsed: !appearance.collapsed });
             setMobileMenuOpen((open) => !open);
@@ -274,6 +277,7 @@ function Topbar({
   horizontal,
   failedMessages,
   showBell,
+  orderToken,
   onToggleMenu,
   onOpenSettings,
   onLogout,
@@ -283,6 +287,8 @@ function Topbar({
   horizontal: boolean;
   failedMessages: number;
   showBell: boolean;
+  /** Session token when this account gets the new-order alerts, else null. */
+  orderToken: string | null;
   onToggleMenu: () => void;
   onOpenSettings: () => void;
   onLogout: () => void;
@@ -346,6 +352,8 @@ function Topbar({
           >
             {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden /> : <Moon className="h-5 w-5" aria-hidden />}
           </button>
+
+          {orderToken ? <OrderAlerts token={orderToken} /> : null}
 
           <button
             type="button"

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { Mail } from "lucide-react";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
@@ -67,7 +68,7 @@ export function ForgotPasswordForm() {
               disabled={submitting}
               className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-on-primary transition-colors hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? tr("Un instant…") : tr("Envoyer le lien")}
+              {submitting ? <ActionLabel text={tr("Un instant…")} /> : <ActionLabel text={tr("Envoyer le lien")} />}
             </button>
           </form>
         )}

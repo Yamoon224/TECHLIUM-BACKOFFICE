@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { QrLink } from "@/components/QrLink";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -153,7 +154,7 @@ export default function InvoicesPage() {
                           onClick={() => handleDownload(invoice)}
                           className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                         >
-                          {tr("PDF")}
+                          <ActionLabel text={tr("PDF")} />
                         </button>
                         {isCreditable(invoice, invoices) ? (
                           <button
@@ -162,7 +163,7 @@ export default function InvoicesPage() {
                             onClick={() => handleCredit(invoice)}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold disabled:opacity-50"
                           >
-                            {tr("Émettre un avoir")}
+                            <ActionLabel text={tr("Émettre un avoir")} />
                           </button>
                         ) : null}
                       </td>
@@ -219,7 +220,7 @@ function NewInvoiceForm({ onSubmit }: { onSubmit: (orderNumber: string) => Promi
       </label>
 
       <Button type="submit" disabled={submitting}>
-        {tr("Émettre la facture")}
+        <ActionLabel text={tr("Émettre la facture")} />
       </Button>
 
       {formError ? <p className="w-full text-sm text-danger">{formError}</p> : null}

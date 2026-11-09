@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { FormModal } from "@/components/Modal";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -120,7 +121,7 @@ export default function PaymentsPage() {
       <main className="flex w-full flex-1 flex-col gap-6 px-4 py-8">
         <div className="flex items-center justify-between">
           <h1 className="page-title font-display text-2xl font-semibold text-ink">{tr("Paiements")}</h1>
-          <Button onClick={() => setShowNew(true)}>{tr("Nouveau paiement")}</Button>
+          <Button onClick={() => setShowNew(true)}><ActionLabel text={tr("Nouveau paiement")} /></Button>
         </div>
 
         {showNew ? (
@@ -184,7 +185,7 @@ export default function PaymentsPage() {
                             onClick={() => handleAction(payment.id, "confirm")}
                             className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                           >
-                            {tr("Confirmer")}
+                            <ActionLabel text={tr("Confirmer")} />
                           </button>
                         ) : null}
                         {payment.status === "pending" ? (
@@ -194,7 +195,7 @@ export default function PaymentsPage() {
                             onClick={() => handleAction(payment.id, "fail")}
                             className="rounded-sm border border-danger px-2 py-1 text-xs text-danger transition-colors disabled:opacity-50"
                           >
-                            {tr("Marquer échoué")}
+                            <ActionLabel text={tr("Marquer échoué")} />
                           </button>
                         ) : null}
                         {payment.status === "completed" || payment.status === "refunded" ? (
@@ -209,7 +210,7 @@ export default function PaymentsPage() {
                             }}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                           >
-                            {tr("Reçu")}
+                            <ActionLabel text={tr("Reçu")} />
                           </button>
                         ) : null}
                         {payment.status === "completed" && payment.refundable_amount > 0 ? (
@@ -219,7 +220,7 @@ export default function PaymentsPage() {
                             onClick={() => handleAction(payment.id, "refund")}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors disabled:opacity-50"
                           >
-                            {tr("Rembourser")}
+                            <ActionLabel text={tr("Rembourser")} />
                           </button>
                         ) : null}
                       </div>

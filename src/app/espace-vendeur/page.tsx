@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { FormModal } from "@/components/Modal";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -208,7 +209,7 @@ function OrdersTab({ token }: { token: string }) {
                 onClick={() => handleShip(order.order_number)}
                 className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
               >
-                {tr("Marquer expédié")}
+                <ActionLabel text={tr("Marquer expédié")} />
               </button>
             ) : (
               <span />
@@ -271,7 +272,7 @@ function PayoutsTab({ token }: { token: string }) {
                       onClick={() => toggle(payout)}
                       className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                     >
-                      {tr("Relevé")}
+                      <ActionLabel text={tr("Relevé")} />
                     </button>
                   </td>
                 </tr>
@@ -329,7 +330,7 @@ function OffersTab({ token }: { token: string }) {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex justify-end">
-        <Button onClick={() => setForm("new")}>{tr("Nouvelle offre")}</Button>
+        <Button onClick={() => setForm("new")}><ActionLabel text={tr("Nouvelle offre")} /></Button>
       </div>
 
       {form === "new" ? (

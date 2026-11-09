@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -130,7 +131,7 @@ export default function VendorsPage() {
                             onClick={() => handleAction(vendor.id, "approve")}
                             className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                           >
-                            {tr("Approuver")}
+                            <ActionLabel text={tr("Approuver")} />
                           </button>
                         ) : null}
                         {vendor.status === "active" ? (
@@ -140,7 +141,7 @@ export default function VendorsPage() {
                             onClick={() => handleAction(vendor.id, "suspend")}
                             className="rounded-sm border border-danger px-2 py-1 text-xs text-danger transition-colors disabled:opacity-50"
                           >
-                            {tr("Suspendre")}
+                            <ActionLabel text={tr("Suspendre")} />
                           </button>
                         ) : null}
                         {vendor.status === "suspended" ? (
@@ -150,7 +151,7 @@ export default function VendorsPage() {
                             onClick={() => handleAction(vendor.id, "reactivate")}
                             className="rounded-sm border border-gold px-2 py-1 text-xs text-gold transition-colors disabled:opacity-50"
                           >
-                            {tr("Réactiver")}
+                            <ActionLabel text={tr("Réactiver")} />
                           </button>
                         ) : null}
                       </div>

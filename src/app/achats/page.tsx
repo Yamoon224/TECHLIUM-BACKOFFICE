@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { QrLink } from "@/components/QrLink";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -289,12 +290,12 @@ function OrderDetail({
       <div className="flex flex-wrap gap-2">
         {actions.includes("place") ? (
           <button type="button" disabled={busy} onClick={onPlace} className={small}>
-            {tr("Envoyer au fournisseur")}
+            <ActionLabel text={tr("Envoyer au fournisseur")} />
           </button>
         ) : null}
         {actions.includes("landed") ? (
           <button type="button" disabled={busy} onClick={onLanded} className={small}>
-            {tr("Ajouter un frais d'approche")}
+            <ActionLabel text={tr("Ajouter un frais d'approche")} />
           </button>
         ) : null}
         {actions.includes("cancel") ? (
@@ -304,7 +305,7 @@ function OrderDetail({
             onClick={onCancel}
             className="rounded-sm border border-danger px-2 py-1 text-xs text-danger disabled:opacity-50"
           >
-            {tr("Annuler")}
+            <ActionLabel text={tr("Annuler")} />
           </button>
         ) : null}
       </div>
@@ -382,7 +383,7 @@ function OrderDetail({
             onClick={submitReceipt}
             className="self-start rounded-sm border border-gold px-3 py-1.5 text-sm text-gold disabled:opacity-50"
           >
-            {tr("Enregistrer la réception")}
+            <ActionLabel text={tr("Enregistrer la réception")} />
           </button>
         </div>
       ) : null}
@@ -478,7 +479,7 @@ function NewOrderForm({
         <span className="field-label">{tr("Livraison attendue")}</span>
       </label>
       <Button type="submit" disabled={submitting}>
-        {tr("Créer le bon")}
+        <ActionLabel text={tr("Créer le bon")} />
         {total > 0 ? ` (${xof(total)})` : ""}
       </Button>
       <p className="w-full text-xs text-ink-soft">
@@ -557,7 +558,7 @@ function SuppliersTab({ token }: { token: string }) {
           />
           <span className="field-label">{tr("Paiement à (jours)")}</span>
         </label>
-        <Button type="submit">{tr("Ajouter")}</Button>
+        <Button type="submit"><ActionLabel text={tr("Ajouter")} /></Button>
         {formError ? <p className="w-full text-sm text-danger">{formError}</p> : null}
       </form>
 
@@ -589,7 +590,7 @@ function SuppliersTab({ token }: { token: string }) {
                     )
                 }
               >
-                {supplier.active ? tr("Désactiver") : tr("Réactiver")}
+                {supplier.active ? <ActionLabel text={tr("Désactiver")} /> : <ActionLabel text={tr("Réactiver")} />}
               </button>
             </li>
           ))}
@@ -713,7 +714,7 @@ function InvoicesTab({ token }: { token: string }) {
                   <td className="py-3">
                     {!invoice.settled ? (
                       <button type="button" className={small} onClick={() => pay(invoice)}>
-                        {tr("Régler")}
+                        <ActionLabel text={tr("Régler")} />
                       </button>
                     ) : null}
                   </td>
@@ -811,7 +812,7 @@ function NewInvoiceForm({
         <input placeholder=" " type="date" value={date} onChange={(e) => setDate(e.target.value)} className={field} />
         <span className="field-label">{tr("Date")}</span>
       </label>
-      <Button type="submit">{tr("Enregistrer")}</Button>
+      <Button type="submit"><ActionLabel text={tr("Enregistrer")} /></Button>
       <p className="w-full text-xs text-ink-soft">
         {tr("L'échéance se calcule avec les conditions de paiement du fournisseur.")}
       </p>

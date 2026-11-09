@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { X } from "lucide-react";
 import { useEffect, useId, useRef, type FormEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
@@ -153,10 +154,10 @@ export function FormModal({ open, title, onClose, onSubmit, submitLabel, submitt
             </p>
           ) : null}
           <Button type="button" variant="secondary" onClick={onClose}>
-            {t("modal.cancel")}
+            <ActionLabel text={t("modal.cancel")} />
           </Button>
           <Button type="submit" disabled={submitting || disabled}>
-            {submitLabel}
+            <ActionLabel text={submitLabel} />
           </Button>
         </>
       }

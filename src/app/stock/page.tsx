@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { useCallback, useEffect, useState } from "react";
@@ -214,7 +215,7 @@ function NewMovementForm({
       </label>
 
       <Button type="submit" disabled={submitting}>
-        {tr("Enregistrer")}
+        <ActionLabel text={tr("Enregistrer")} />
       </Button>
 
       {formError ? <p className="w-full text-sm text-danger">{formError}</p> : null}

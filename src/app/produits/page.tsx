@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { QrLink } from "@/components/QrLink";
 import { DataTable } from "@/components/DataTable";
 import { Dropzone } from "@/components/Dropzone";
@@ -20,7 +21,7 @@ import {
   imageProblem,
   MAX_GALLERY_IMAGES,
   listCategories,
-  listProducts,
+  listAllProducts,
   removeProductImage,
   setProductCover,
   updateProduct,
@@ -57,9 +58,9 @@ export default function ProductsPage() {
     setLoading(true);
     setError(null);
 
-    Promise.all([listProducts(token), listCategories(token)])
-      .then(([productPage, categoryList]) => {
-        setProducts(productPage.data);
+    Promise.all([listAllProducts(token), listCategories(token)])
+      .then(([productList, categoryList]) => {
+        setProducts(productList);
         setCategories(categoryList);
       })
       .catch((caught) => setError(caught instanceof CatalogError ? caught.message : tr("Produits indisponibles.")))
@@ -163,7 +164,7 @@ export default function ProductsPage() {
       <main className="flex w-full flex-1 flex-col gap-6 px-4 py-8">
         <div className="flex items-center justify-between">
           <h1 className="page-title font-display text-2xl font-semibold text-ink">{tr("Produits")}</h1>
-          <Button onClick={() => openForm("new")}>{tr("Nouveau produit")}</Button>
+          <Button onClick={() => openForm("new")}><ActionLabel text={tr("Nouveau produit")} /></Button>
         </div>
 
         {error && form === null ? <p className="text-sm text-danger">{error}</p> : null}
@@ -179,7 +180,7 @@ export default function ProductsPage() {
                 view === mode ? "border-gold text-gold" : "border-line text-ink hover:border-gold"
               }`}
             >
-              {mode === "table" ? tr("Tableau") : tr("Cartes")}
+              {mode === "table" ? <ActionLabel text={tr("Tableau")} /> : <ActionLabel text={tr("Cartes")} />}
             </button>
           ))}
         </div>
@@ -277,7 +278,7 @@ export default function ProductsPage() {
                     <div className="flex flex-wrap gap-2">
                       {product.sku ? <QrLink kind="product" reference={product.sku} /> : null}
                       <button type="button" onClick={() => openForm(product.id)} className={BUTTON_CLASS}>
-                        {tr("Modifier")}
+                        <ActionLabel text={tr("Modifier")} />
                       </button>
                       {product.status !== "archived" ? (
                         <button
@@ -285,7 +286,7 @@ export default function ProductsPage() {
                           onClick={() => handleArchive(product.id)}
                           className="rounded-sm border border-line px-2 py-1 text-xs text-danger transition-colors hover:border-danger"
                         >
-                          {tr("Archiver")}
+                          <ActionLabel text={tr("Archiver")} />
                         </button>
                       ) : null}
                     </div>
@@ -338,7 +339,7 @@ function ProductCard({ product, onEdit, onArchive }: { product: Product; onEdit:
       <div className="flex flex-wrap gap-2">
         {product.sku ? <QrLink kind="product" reference={product.sku} /> : null}
         <button type="button" onClick={onEdit} className={BUTTON_CLASS}>
-          {tr("Modifier")}
+          <ActionLabel text={tr("Modifier")} />
         </button>
         {product.status !== "archived" ? (
           <button
@@ -346,7 +347,7 @@ function ProductCard({ product, onEdit, onArchive }: { product: Product; onEdit:
             onClick={onArchive}
             className="rounded-sm border border-line px-2 py-1 text-xs text-danger transition-colors hover:border-danger"
           >
-            {tr("Archiver")}
+            <ActionLabel text={tr("Archiver")} />
           </button>
         ) : null}
       </div>
@@ -624,7 +625,7 @@ function Gallery({
               onClick={() => onCover(image.id)}
               className="text-left text-xs text-ink underline-offset-4 hover:text-gold hover:underline"
             >
-              {tr("Définir comme couverture")}
+              <ActionLabel text={tr("Définir comme couverture")} />
             </button>
           )}
           <button
@@ -632,7 +633,7 @@ function Gallery({
             onClick={() => onRemove(image.id)}
             className="text-left text-xs text-danger underline-offset-4 hover:underline"
           >
-            {tr("Supprimer")}
+            <ActionLabel text={tr("Supprimer")} />
           </button>
         </figure>
       ))}

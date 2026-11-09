@@ -33,6 +33,9 @@ export interface Order {
   subtotal: { amount: number; currency: string };
   discount?: { amount: number; currency: string };
   coupon_code?: string | null;
+  /** Who carries the parcel, captured when the order is shipped. */
+  courier_name?: string | null;
+  courier_phone?: string | null;
   items: OrderItem[];
   sub_orders?: SubOrder[];
   /** True when the sub-orders are at different stages (partially shipped / delivered). */
@@ -62,8 +65,23 @@ async function parseErrorMessage(response: Response): Promise<string> {
   }
 }
 
-export async function listOrders(token: string, status?: OrderStatus): Promise<Order[]> {
-  const params = status ? `?status=${encodeURIComponent(status)}` : "";
+export interface OrderDateRange {
+  /** "online" = placed on the storefront. */
+  channel?: string;
+  perPage?: number;
+  /** YYYY-MM-DD, inclusive. */
+  from?: string;
+  to?: string;
+}
+
+export async function listOrders(token: string, status?: OrderStatus, range: OrderDateRange = {}): Promise<Order[]> {
+  const query = new URLSearchParams();
+  if (status) query.set("status", status);
+  if (range.from) query.set("from", range.from);
+  if (range.to) query.set("to", range.to);
+  if (range.channel) query.set("channel", range.channel);
+  if (range.perPage) query.set("per_page", String(range.perPage));
+  const params = query.size > 0 ? `?${query.toString()}` : "";
   const response = await fetch(`${API_BASE_URL}/orders${params}`, {
     headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
     cache: "no-store",
@@ -77,7 +95,12 @@ export async function listOrders(token: string, status?: OrderStatus): Promise<O
   return body.data;
 }
 
-export async function transitionOrder(token: string, orderNumber: string, status: OrderStatus): Promise<Order> {
+export interface Courier {
+  name: string;
+  phone: string;
+}
+
+export async function transitionOrder(token: string, orderNumber: string, status: OrderStatus, courier?: Courier): Promise<Order> {
   const response = await fetch(`${API_BASE_URL}/orders/${encodeURIComponent(orderNumber)}/transition`, {
     method: "POST",
     headers: {
@@ -85,7 +108,7 @@ export async function transitionOrder(token: string, orderNumber: string, status
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(courier ? { status, courier_name: courier.name, courier_phone: courier.phone } : { status }),
   });
 
   if (!response.ok) {

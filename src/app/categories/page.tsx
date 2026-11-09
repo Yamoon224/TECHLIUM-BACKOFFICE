@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { LanguageTabs } from "@/components/LanguageTabs";
 import { FormModal } from "@/components/Modal";
@@ -75,6 +76,17 @@ export default function CategoriesPage() {
     }
   }
 
+  async function handleToggle(category: Category) {
+    if (!token) return;
+    setError(null);
+    try {
+      const updated = await updateCategory(token, category.id, { is_active: !category.is_active });
+      setCategories((current) => current.map((row) => (row.id === category.id ? updated : row)));
+    } catch (caught) {
+      setError(caught instanceof CatalogError ? caught.message : tr("Mise à jour impossible."));
+    }
+  }
+
   async function handleDelete(id: number) {
     if (!token) return;
     setError(null);
@@ -114,7 +126,7 @@ export default function CategoriesPage() {
               setForm("new");
             }}
           >
-            {tr("Nouvelle catégorie")}
+            <ActionLabel text={tr("Nouvelle catégorie")} />
           </Button>
         </div>
 
@@ -161,14 +173,21 @@ export default function CategoriesPage() {
                             }}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
                           >
-                            {tr("Modifier")}
+                            <ActionLabel text={tr("Modifier")} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleToggle(category)}
+                            className="rounded-sm border border-line px-2 py-1 text-xs text-ink transition-colors hover:border-gold"
+                          >
+                            {category.is_active ? <ActionLabel text={tr("Désactiver")} /> : <ActionLabel text={tr("Activer")} />}
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDelete(category.id)}
                             className="rounded-sm border border-line px-2 py-1 text-xs text-danger transition-colors hover:border-danger"
                           >
-                            {tr("Supprimer")}
+                            <ActionLabel text={tr("Supprimer")} />
                           </button>
                         </div>
                       </td>
