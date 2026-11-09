@@ -117,6 +117,7 @@ export const VENDOR_NAV: NavGroup[] = [
 export const SHORTCUTS: NavItem[] = [
   { href: "/", label: "nav.dashboard", Icon: LayoutDashboard },
   { href: "/commandes", label: "nav.orders", Icon: ShoppingCart, ability: "manage-orders" },
+  { href: "/ventes-internes", label: "nav.internalSales", Icon: ShoppingBasket, ability: "manage-internal-sales" },
   { href: "/produits", label: "nav.products", Icon: Package, ability: "manage-catalog" },
   { href: "/stock", label: "nav.stock", Icon: Boxes, ability: "manage-stock" },
   { href: "/factures", label: "nav.invoices", Icon: ReceiptText, ability: "manage-invoices" },
