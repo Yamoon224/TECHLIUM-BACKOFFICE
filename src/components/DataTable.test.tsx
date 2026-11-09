@@ -1,3 +1,4 @@
+import { PAGE_SIZES } from "@/lib/datatable";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AppearanceProvider } from "./AppearanceProvider";
@@ -46,9 +47,9 @@ describe("DataTable", () => {
   });
 
   it("offers the page sizes 10, 20, 30, 50, 100 and All", () => {
-    const html = render();
-
-    for (const label of ["10", "20", "30", "50", "100", "Tous"]) expect(html).toContain(`>${label}</option>`);
+    // The sizes live in a searchable list that is closed on first render: it shows the current one.
+    expect(PAGE_SIZES).toEqual([10, 20, 30, 50, 100, "all"]);
+    expect(render()).toMatch(/role="combobox"[^>]*>[^]*?<span[^>]*>10<\/span>/);
   });
 
   it("has Previous disabled on the first page and Next enabled", () => {

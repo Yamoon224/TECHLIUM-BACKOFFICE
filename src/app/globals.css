@@ -97,7 +97,8 @@ body {
   flex-direction: column;
   padding-top: 1rem;
 }
-.field > :is(input, textarea, select) {
+.field > :is(input, textarea, select),
+.field > .select-root > .select-trigger {
   width: 100%;
   margin: 0;
   padding: 0.3rem 0 0.35rem;
@@ -130,11 +131,14 @@ select optgroup {
   background-color: var(--surface);
   color: var(--ink);
 }
-.field > :is(input, textarea, select):focus {
+.field > :is(input, textarea, select):focus,
+.field > .select-root > .select-trigger:focus,
+.field > .select-root > .select-trigger[aria-expanded="true"] {
   border-bottom-color: var(--gold);
   box-shadow: 0 1px 0 0 var(--gold);
 }
-.field > :is(input, textarea, select):disabled {
+.field > :is(input, textarea, select):disabled,
+.field > .select-root > .select-trigger:disabled {
   border-bottom-style: dotted;
   color: var(--ink-soft);
 }
@@ -166,11 +170,13 @@ select optgroup {
 .field > :is(input, textarea, select):focus ~ .field-label,
 .field > :is(input, textarea):not(:placeholder-shown) ~ .field-label,
 .field > select ~ .field-label,
+.field > .select-root ~ .field-label,
 .field > input:is([type="date"], [type="datetime-local"], [type="month"], [type="time"]) ~ .field-label {
   max-width: 125%;
   transform: translateY(-1.35rem) scale(0.8);
 }
-.field > :is(input, textarea, select):focus ~ .field-label {
+.field > :is(input, textarea, select):focus ~ .field-label,
+.field > .select-root:focus-within ~ .field-label {
   color: var(--gold);
 }
 /* Room for an action button (the password eye) on the right. */

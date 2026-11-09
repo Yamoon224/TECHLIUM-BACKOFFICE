@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { Dropzone } from "@/components/Dropzone";
 import { Download, ImageOff, QrCode } from "lucide-react";
@@ -146,13 +147,13 @@ export function QrGenerator({
           }}
         >
           <label className="field">
-            <select value={kind} onChange={(event) => setKind(event.target.value as QrKind)}>
+            <SearchSelect value={kind} onChange={(event) => setKind(event.target.value as QrKind)}>
               {QR_KINDS.map((item) => (
                 <option key={item.value} value={item.value}>
                   {tr(item.label)}
                 </option>
               ))}
-            </select>
+            </SearchSelect>
             <span className="field-label">{tr("Type de document")}</span>
           </label>
 
@@ -216,13 +217,13 @@ export function QrGenerator({
           <p className="text-xs text-ink-soft">{tr("Gardez un code sombre sur fond clair : c'est ce que les lecteurs lisent le mieux.")}</p>
 
           <label className="field">
-            <select value={size} onChange={(event) => setSize(Number(event.target.value))}>
+            <SearchSelect value={size} onChange={(event) => setSize(Number(event.target.value))}>
               {QR_EXPORT_SIZES.map((option) => (
                 <option key={option.value} value={option.value}>
                   {tr(option.label)}
                 </option>
               ))}
-            </select>
+            </SearchSelect>
             <span className="field-label">{tr("Taille du fichier (PNG et SVG)")}</span>
           </label>
         </fieldset>

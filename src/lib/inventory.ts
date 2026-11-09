@@ -40,8 +40,21 @@ function authHeaders(token: string): HeadersInit {
   return { Authorization: `Bearer ${token}`, Accept: "application/json", "Content-Type": "application/json" };
 }
 
+/** One offer of an active product with its stock level (same shape as the low-stock list). */
+export type StockProduct = LowStockOffer;
+
+/** The published offers of the active products, with their stock. */
+export async function listActiveStock(token: string): Promise<StockProduct[]> {
+  const response = await fetch(`${API_BASE_URL}/admin/stock/products`, {
+    headers: authHeaders(token),
+    cache: "no-store",
+  });
+  if (!response.ok) throw await parseError(response);
+  return response.json() as Promise<StockProduct[]>;
+}
+
 export async function listMovements(token: string, offerId?: number): Promise<StockMovement[]> {
-  const params = offerId ? `?offer_id=${offerId}` : "";
+  const params = offerId ? `?offer_id=${offerId}&per_page=200` : "?per_page=200";
   const response = await fetch(`${API_BASE_URL}/admin/stock/movements${params}`, {
     headers: authHeaders(token),
     cache: "no-store",

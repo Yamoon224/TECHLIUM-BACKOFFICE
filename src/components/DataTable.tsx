@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, ChevronsUpDown, Download, Search, X } from "lucide-react";
 import { Fragment, useMemo, useState, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -219,7 +220,7 @@ export function DataTable<T>({ name, title, rows, headers, actionColumns = [], r
       <div className="grid items-center gap-3 border-t border-line pt-3 text-sm text-ink sm:grid-cols-3">
         <label className="flex items-center gap-2 text-ink-soft sm:justify-self-start">
           <span>{t("table.pageSize")}</span>
-          <select
+          <SearchSelect
             value={String(pageSize)}
             onChange={(event) => {
               const value = event.target.value;
@@ -233,7 +234,7 @@ export function DataTable<T>({ name, title, rows, headers, actionColumns = [], r
                 {size === "all" ? t("table.all") : size}
               </option>
             ))}
-          </select>
+          </SearchSelect>
         </label>
 
         <div className="flex items-center justify-center gap-3 sm:justify-self-center">

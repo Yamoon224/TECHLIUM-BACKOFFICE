@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { QrLink } from "@/components/QrLink";
 import { DataTable } from "@/components/DataTable";
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
 import { Button } from "@/components/Button";
+import { ProductImportModal } from "@/components/ProductImportModal";
 import { useAuth } from "@/lib/useAuth";
 import {
   CatalogError,
@@ -48,6 +50,7 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
+  const [importing, setImporting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<FormTarget>(null);
   const [view, setView] = useState<"table" | "cards">("table");
@@ -129,6 +132,17 @@ export default function ProductsPage() {
     }
   }
 
+  /** Activate (published, visible on the marketplace) or deactivate (draft, hidden) a product. */
+  async function handleToggle(product: Product) {
+    if (!token) return;
+    setError(null);
+    try {
+      replaceProduct(await updateProduct(token, product.id, { status: product.status === "published" ? "draft" : "published" }));
+    } catch (caught) {
+      setError(caught instanceof CatalogError ? caught.message : tr("Mise à jour impossible."));
+    }
+  }
+
   async function handleArchive(id: number) {
     if (!token) return;
     setError(null);
@@ -164,8 +178,15 @@ export default function ProductsPage() {
       <main className="flex w-full flex-1 flex-col gap-6 px-4 py-8">
         <div className="flex items-center justify-between">
           <h1 className="page-title font-display text-2xl font-semibold text-ink">{tr("Produits")}</h1>
-          <Button onClick={() => openForm("new")}><ActionLabel text={tr("Nouveau produit")} /></Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" onClick={() => setImporting(true)}>
+              <ActionLabel text={tr("Importer")} />
+            </Button>
+            <Button onClick={() => openForm("new")}><ActionLabel text={tr("Nouveau produit")} /></Button>
+          </div>
         </div>
+
+        <ProductImportModal open={importing} token={token} categories={categories} onClose={() => setImporting(false)} onImported={refresh} />
 
         {error && form === null ? <p className="text-sm text-danger">{error}</p> : null}
 
@@ -234,6 +255,7 @@ export default function ProductsPage() {
                 key={product.id}
                 product={product}
                 onEdit={() => openForm(product.id)}
+                onToggle={() => handleToggle(product)}
                 onArchive={() => handleArchive(product.id)}
               />
             ))}
@@ -280,6 +302,9 @@ export default function ProductsPage() {
                       <button type="button" onClick={() => openForm(product.id)} className={BUTTON_CLASS}>
                         <ActionLabel text={tr("Modifier")} />
                       </button>
+                      <button type="button" onClick={() => handleToggle(product)} className={BUTTON_CLASS}>
+                        <ActionLabel text={product.status === "published" ? tr("Désactiver") : tr("Activer")} />
+                      </button>
                       {product.status !== "archived" ? (
                         <button
                           type="button"
@@ -301,7 +326,7 @@ export default function ProductsPage() {
   );
 }
 
-function ProductCard({ product, onEdit, onArchive }: { product: Product; onEdit: () => void; onArchive: () => void }) {
+function ProductCard({ product, onEdit, onToggle, onArchive }: { product: Product; onEdit: () => void; onToggle: () => void; onArchive: () => void }) {
   const { tr } = useAppearance();
 
   return (
@@ -340,6 +365,9 @@ function ProductCard({ product, onEdit, onArchive }: { product: Product; onEdit:
         {product.sku ? <QrLink kind="product" reference={product.sku} /> : null}
         <button type="button" onClick={onEdit} className={BUTTON_CLASS}>
           <ActionLabel text={tr("Modifier")} />
+        </button>
+        <button type="button" onClick={onToggle} className={BUTTON_CLASS}>
+          <ActionLabel text={product.status === "published" ? tr("Désactiver") : tr("Activer")} />
         </button>
         {product.status !== "archived" ? (
           <button
@@ -479,13 +507,13 @@ function ProductFormModal({
       <div className="flex flex-col gap-6">
         <section className="grid gap-4 sm:grid-cols-3">
           <label className="field sm:col-span-3">
-            <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)} className={FIELD_CLASS}>
+            <SearchSelect value={categoryId} onChange={(event) => setCategoryId(event.target.value)} className={FIELD_CLASS}>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
-            </select>
+            </SearchSelect>
             <span className="field-label">{tr("Catégorie")}</span>
           </label>
           <label className="field">

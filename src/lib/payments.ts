@@ -6,7 +6,7 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1";
 
-export type PaymentMethod = "cod" | "mobile_money";
+export type PaymentMethod = "cash" | "cod" | "mobile_money";
 export type PaymentStatus = "pending" | "completed" | "failed" | "refunded";
 export type MobileMoneyProvider = "orange_money" | "mtn_money" | "wave";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { FormModal } from "@/components/Modal";
@@ -33,6 +34,7 @@ const STATUS_LABEL: Record<PaymentStatus, string> = {
 };
 
 const METHOD_LABEL: Record<PaymentMethod, string> = {
+  cash: "Espèces",
   cod: "Paiement à la livraison",
   mobile_money: "Mobile money",
 };
@@ -272,7 +274,7 @@ function NewPaymentForm({
 }) {
   const { tr } = useAppearance();
   const [orderNumber, setOrderNumber] = useState("");
-  const [method, setMethod] = useState<PaymentMethod>("cod");
+  const [method, setMethod] = useState<PaymentMethod>("cash");
   const [amount, setAmount] = useState("");
   const [provider, setProvider] = useState<MobileMoneyProvider>("orange_money");
   const [reference, setReference] = useState("");
@@ -322,21 +324,22 @@ function NewPaymentForm({
         </label>
 
         <label className="field">
-          <select value={method} onChange={(event) => setMethod(event.target.value as PaymentMethod)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink">
+          <SearchSelect value={method} onChange={(event) => setMethod(event.target.value as PaymentMethod)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink">
+            <option value="cash">{tr("Espèces")}</option>
             <option value="cod">{tr("Paiement à la livraison")}</option>
             <option value="mobile_money">{tr("Mobile money")}</option>
-          </select>
+          </SearchSelect>
           <span className="field-label">{tr("Méthode")}</span>
         </label>
 
         {method === "mobile_money" ? (
           <>
             <label className="field">
-              <select value={provider} onChange={(event) => setProvider(event.target.value as MobileMoneyProvider)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink">
+              <SearchSelect value={provider} onChange={(event) => setProvider(event.target.value as MobileMoneyProvider)} className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink">
                 <option value="orange_money">{tr("Orange Money")}</option>
                 <option value="mtn_money">{tr("MTN Money")}</option>
                 <option value="wave">{tr("Wave")}</option>
-              </select>
+              </SearchSelect>
               <span className="field-label">{tr("Opérateur")}</span>
             </label>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
@@ -397,14 +398,14 @@ export default function InternalSalesPage() {
 
               <div className="flex flex-wrap items-end gap-3">
                 <label className="field">
-                  <select
+                  <SearchSelect
                     value={method}
                     onChange={(event) => setMethod(event.target.value as SaleMethod)}
                     className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink"
                   >
                     <option value="cash">{tr("Espèces")}</option>
                     <option value="mobile_money">{tr("Mobile money")}</option>
-                  </select>
+                  </SearchSelect>
                   <span className="field-label">{tr("Mode de paiement")}</span>
                 </label>
 
@@ -423,7 +424,7 @@ export default function InternalSalesPage() {
                 ) : (
                   <>
                     <label className="field">
-                      <select
+                      <SearchSelect
                         value={provider}
                         onChange={(event) => setProvider(event.target.value as MobileMoneyProvider)}
                         className="rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink"
@@ -431,7 +432,7 @@ export default function InternalSalesPage() {
                         <option value="orange_money">{tr("Orange Money")}</option>
                         <option value="mtn_money">{tr("MTN Money")}</option>
                         <option value="wave">{tr("Wave")}</option>
-                      </select>
+                      </SearchSelect>
                       <span className="field-label">{tr("Opérateur")}</span>
                     </label>
                     <label className="field">

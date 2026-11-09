@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { LanguageTabs } from "@/components/LanguageTabs";
@@ -276,7 +277,7 @@ function CategoryFormModal({
           }
         />
         <label className="field">
-          <select value={parentId} onChange={(event) => setParentId(event.target.value)} className={fieldClass}>
+          <SearchSelect value={parentId} onChange={(event) => setParentId(event.target.value)} className={fieldClass}>
             <option value="">{tr("Aucune")}</option>
             {categories
               .filter((candidate) => candidate.id !== category?.id)
@@ -285,7 +286,7 @@ function CategoryFormModal({
                   {candidate.name}
                 </option>
               ))}
-          </select>
+          </SearchSelect>
           <span className="field-label">{tr("Catégorie parente")}</span>
         </label>
         <label className="field">

@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -267,7 +268,7 @@ function TicketPanel({
         </button>
 
         <label className="field items-center">
-          <select
+          <SearchSelect
             value={ticket.priority}
             disabled={busy}
             onChange={(event) =>
@@ -283,7 +284,7 @@ function TicketPanel({
                 {label}
               </option>
             ))}
-          </select>
+          </SearchSelect>
           <span className="field-label">{tr("Priorité")}</span>
         </label>
 

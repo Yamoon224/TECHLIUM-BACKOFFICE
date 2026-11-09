@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -133,7 +134,7 @@ export default function AuditPage() {
             <span className="field-label">{tr("Utilisateur (id)")}</span>
           </label>
           <label className="field">
-            <select
+            <SearchSelect
               value={draft.method ?? ""}
               onChange={(e) => setDraft({ ...draft, method: e.target.value })}
               className={field}
@@ -144,7 +145,7 @@ export default function AuditPage() {
                   {method}
                 </option>
               ))}
-            </select>
+            </SearchSelect>
             <span className="field-label">{tr("Méthode")}</span>
           </label>
           <label className="field">

@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -137,7 +138,7 @@ export default function PayoutsPage() {
           className="flex flex-wrap items-end gap-3 rounded-sm border border-line p-4 bg-surface shadow-card border-b-4 border-b-gold"
         >
           <label className="field">
-            <select
+            <SearchSelect
               value={vendorId}
               onChange={(event) => setVendorId(event.target.value)}
               className="min-w-56 rounded-sm border border-line bg-surface px-3 py-2 text-sm text-ink"
@@ -148,7 +149,7 @@ export default function PayoutsPage() {
                   {vendor.company_name}
                 </option>
               ))}
-            </select>
+            </SearchSelect>
             <span className="field-label">{tr("Vendeur")}</span>
           </label>
           <Button type="submit" disabled={busy || !vendorId}>

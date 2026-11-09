@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { QrLink } from "@/components/QrLink";
 import { DataTable } from "@/components/DataTable";
@@ -449,14 +450,14 @@ function NewOrderForm({
       className="flex flex-wrap items-end gap-3 rounded-sm border border-line p-4 bg-surface shadow-card border-b-4 border-b-gold"
     >
       <label className="field">
-        <select value={supplierId} onChange={(e) => setSupplierId(e.target.value)} className={`${field} min-w-52`}>
+        <SearchSelect value={supplierId} onChange={(e) => setSupplierId(e.target.value)} className={`${field} min-w-52`}>
           <option value="">{tr("Choisir…")}</option>
           {suppliers.map((supplier) => (
             <option key={supplier.id} value={supplier.id}>
               {supplier.name}
             </option>
           ))}
-        </select>
+        </SearchSelect>
         <span className="field-label">{tr("Fournisseur")}</span>
       </label>
       <label className="field">
@@ -777,14 +778,14 @@ function NewInvoiceForm({
       className="flex flex-wrap items-end gap-3 rounded-sm border border-line p-4 bg-surface shadow-card border-b-4 border-b-gold"
     >
       <label className="field">
-        <select value={supplierId} onChange={(e) => setSupplierId(e.target.value)} className={`${field} min-w-48`}>
+        <SearchSelect value={supplierId} onChange={(e) => setSupplierId(e.target.value)} className={`${field} min-w-48`}>
           <option value="">{tr("Choisir…")}</option>
           {suppliers.map((supplier) => (
             <option key={supplier.id} value={supplier.id}>
               {supplier.name}
             </option>
           ))}
-        </select>
+        </SearchSelect>
         <span className="field-label">{tr("Fournisseur")}</span>
       </label>
       <label className="field">
@@ -792,10 +793,10 @@ function NewInvoiceForm({
         <span className="field-label">{tr("N° de facture")}</span>
       </label>
       <label className="field">
-        <select value={kind} onChange={(e) => setKind(e.target.value as "goods" | "landed_cost")} className={field}>
+        <SearchSelect value={kind} onChange={(e) => setKind(e.target.value as "goods" | "landed_cost")} className={field}>
           <option value="goods">{tr("Marchandises")}</option>
           <option value="landed_cost">{tr("Frais d'approche")}</option>
-        </select>
+        </SearchSelect>
         <span className="field-label">{tr("Nature")}</span>
       </label>
       <label className="field">

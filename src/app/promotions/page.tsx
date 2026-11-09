@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { DataTable } from "@/components/DataTable";
 import { useAppearance } from "@/components/AppearanceProvider";
@@ -236,10 +237,10 @@ function NewCouponForm({ onSubmit }: { onSubmit: (input: NewCouponInput) => Prom
         <span className="field-label">{tr("Code")}</span>
       </label>
       <label className="field">
-        <select value={type} onChange={(e) => setType(e.target.value as CouponType)} className={field}>
+        <SearchSelect value={type} onChange={(e) => setType(e.target.value as CouponType)} className={field}>
           <option value="percent">{tr("Pourcentage")}</option>
           <option value="fixed">{tr("Montant fixe")}</option>
-        </select>
+        </SearchSelect>
         <span className="field-label">{tr("Type")}</span>
       </label>
       <label className="field">
