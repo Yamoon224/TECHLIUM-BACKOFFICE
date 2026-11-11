@@ -22,7 +22,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
           fill
           priority
           sizes="(min-width: 1024px) 58vw, 0px"
-          className="object-cover object-[center_30%]"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-br from-gold/25 via-transparent to-transparent mix-blend-multiply" />
