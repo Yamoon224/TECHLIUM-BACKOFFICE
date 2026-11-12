@@ -74,9 +74,11 @@ function authHeaders(token: string): HeadersInit {
   return { Authorization: `Bearer ${token}`, Accept: "application/json", "Content-Type": "application/json" };
 }
 
-export async function listInvoices(token: string, filters: { type?: InvoiceType } = {}): Promise<Invoice[]> {
+export async function listInvoices(token: string, filters: { type?: InvoiceType; from?: string; to?: string } = {}): Promise<Invoice[]> {
   const params = new URLSearchParams({ per_page: "100" });
   if (filters.type) params.set("type", filters.type);
+  if (filters.from) params.set("from", filters.from);
+  if (filters.to) params.set("to", filters.to);
 
   const response = await fetch(`${API_BASE_URL}/admin/invoices?${params.toString()}`, {
     headers: authHeaders(token),

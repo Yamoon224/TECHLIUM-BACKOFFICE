@@ -3,6 +3,7 @@
 import { SearchSelect } from "@/components/SearchSelect";
 import { ActionLabel } from "@/components/ActionLabel";
 import { Fragment, useCallback, useEffect, useState } from "react";
+import { DateRangeFilter, inDateRange } from "@/components/DateRangeFilter";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
@@ -51,6 +52,9 @@ export default function InternalSalesPage() {
 
   const [sales, setSales] = useState<InternalSale[]>([]);
   const [details, setDetails] = useState<InternalSale | null>(null);
+  const [saleFilter, setSaleFilter] = useState<"all" | "valid" | "cancelled">("all");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const [search, setSearch] = useState("");
@@ -84,6 +88,12 @@ export default function InternalSalesPage() {
       .then(setSales)
       .catch((caught) => setError(caught instanceof InternalSalesError ? caught.message : tr("Ventes indisponibles.")));
   }, [token, tr]);
+
+  const visibleSales = sales.filter(
+    (sale) =>
+      inDateRange(sale.created_at, dateFrom, dateTo) &&
+      (saleFilter === "all" || (saleFilter === "cancelled") === (sale.cancelled_at !== null)),
+  );
 
   useEffect(() => {
     refresh();
@@ -543,18 +553,41 @@ export default function InternalSalesPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="font-display text-lg font-semibold text-ink">{tr("Dernières ventes internes")}</h2>
-          {sales.length === 0 ? (
+          <nav className="flex flex-wrap gap-2">
+            {([["all", "Toutes"], ["valid", "Validées"], ["cancelled", "Annulées"]] as const).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setSaleFilter(value)}
+                className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+                  saleFilter === value ? "border-gold bg-gold text-on-primary font-medium" : "border-line text-ink hover:border-gold"
+                }`}
+              >
+                {tr(label)}
+              </button>
+            ))}
+          </nav>
+          <DateRangeFilter
+            from={dateFrom}
+            to={dateTo}
+            onChange={(range) => {
+              setDateFrom(range.from);
+              setDateTo(range.to);
+            }}
+          />
+          {visibleSales.length === 0 ? (
             <p className="text-sm text-ink-soft">{tr("Aucune vente interne.")}</p>
           ) : (
             <div className="overflow-x-auto rounded-sm bg-surface p-4 shadow-card border-b-4 border-b-gold">
               <DataTable
                 name="ventes-internes"
-                rows={sales}
-                headers={[tr("Commande"), tr("Client"), tr("Total"), tr("Paiement"), tr("N° de reçu"), tr("Action")]}
-                actionColumns={[5]}
+                rows={visibleSales}
+                headers={[tr("Commande"), tr("Date"), tr("Client"), tr("Total"), tr("Paiement"), tr("N° de reçu"), tr("Action")]}
+                actionColumns={[6]}
                 renderRow={(sale) => (
                   <tr key={sale.order_number} className="border-b border-line">
                     <td className="py-3 pr-4 text-ink">{sale.order_number}</td>
+                    <td className="py-3 pr-4 text-ink-soft">{sale.created_at ? new Date(sale.created_at).toLocaleString("fr-FR") : "-"}</td>
                     <td className="py-3 pr-4 text-ink-soft">{sale.customer_name}</td>
                     <td className="py-3 pr-4 text-ink">{money(sale.total_amount)}</td>
                     <td className="py-3 pr-4 text-ink-soft">{sale.payment?.method === "mobile_money" ? tr("Mobile money") : tr("Espèces")}</td>

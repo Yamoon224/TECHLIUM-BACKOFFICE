@@ -308,6 +308,8 @@ export const PHRASES_EN: Record<string, string> = {
   "Utilisateur (id)": "User (id)",
   "Méthode": "Method",
   "Toutes": "All",
+  "Validées": "Completed",
+  "Annulées": "Cancelled",
   "Chemin contient": "Path contains",
   "refund": "refund",
   "Du": "From",

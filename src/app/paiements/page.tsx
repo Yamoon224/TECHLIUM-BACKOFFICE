@@ -7,6 +7,7 @@ import { FormModal } from "@/components/Modal";
 import { useAppearance } from "@/components/AppearanceProvider";
 import { receiptFilename, savePdf, withLanguage } from "@/lib/download";
 import { useCallback, useEffect, useState } from "react";
+import { DateRangeFilter } from "@/components/DateRangeFilter";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
@@ -49,6 +50,8 @@ export default function PaymentsPage() {
   const [error, setError] = useState<string | null>(null);
   const [pendingId, setPendingId] = useState<number | null>(null);
   const [showNew, setShowNew] = useState(false);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   const refresh = useCallback(() => {
     if (!token) return;
@@ -56,11 +59,11 @@ export default function PaymentsPage() {
     setLoading(true);
     setError(null);
 
-    listPayments(token, { status: filter ?? undefined })
+    listPayments(token, { status: filter ?? undefined, from: dateFrom || undefined, to: dateTo || undefined })
       .then(setPayments)
       .catch((caught) => setError(caught instanceof PaymentsError ? caught.message : tr("Paiements indisponibles.")))
       .finally(() => setLoading(false));
-  }, [token, filter, tr]);
+  }, [token, filter, dateFrom, dateTo, tr]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -148,6 +151,15 @@ export default function PaymentsPage() {
           ))}
         </nav>
 
+        <DateRangeFilter
+          from={dateFrom}
+          to={dateTo}
+          onChange={(range) => {
+            setDateFrom(range.from);
+            setDateTo(range.to);
+          }}
+        />
+
         {error ? <p className="text-sm text-danger">{error}</p> : null}
 
         {loading ? (
@@ -159,11 +171,12 @@ export default function PaymentsPage() {
             <DataTable
   name="paiements"
   rows={payments}
-  headers={[tr("Commande"), tr("Méthode"), tr("Montant"), tr("Référence"), tr("Statut"), tr("Action")]}
-  actionColumns={[5]}
+  headers={[tr("Commande"), tr("Date"), tr("Méthode"), tr("Montant"), tr("Référence"), tr("Statut"), tr("Action")]}
+  actionColumns={[6]}
   renderRow={(payment) => (
                   <tr key={payment.id} className="border-b border-line">
                     <td className="py-3 pr-4 text-ink">{payment.order_number}</td>
+                    <td className="py-3 pr-4 text-ink-soft">{(payment.paid_at ?? payment.created_at) ? new Date((payment.paid_at ?? payment.created_at) as string).toLocaleString("fr-FR") : "-"}</td>
                     <td className="py-3 pr-4 text-ink-soft">
                       {tr(METHOD_LABEL[payment.method])}
                       {payment.provider ? ` (${payment.provider})` : ""}

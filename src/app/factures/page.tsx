@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
 import { Button } from "@/components/Button";
+import { DateRangeFilter } from "@/components/DateRangeFilter";
 import { useAuth } from "@/lib/useAuth";
 import {
   INVOICE_TYPE_LABEL,
@@ -19,6 +20,7 @@ import {
   issueInvoice,
   listInvoices,
   type Invoice,
+  type InvoiceType,
 } from "@/lib/invoicing";
 import { formatMoney } from "@/lib/money";
 
@@ -30,6 +32,9 @@ export default function InvoicesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingId, setPendingId] = useState<number | null>(null);
+  const [typeFilter, setTypeFilter] = useState<InvoiceType | null>(null);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   const refresh = useCallback(() => {
     if (!token) return;
@@ -37,11 +42,11 @@ export default function InvoicesPage() {
     setLoading(true);
     setError(null);
 
-    listInvoices(token)
+    listInvoices(token, { type: typeFilter ?? undefined, from: dateFrom || undefined, to: dateTo || undefined })
       .then(setInvoices)
       .catch((caught) => setError(caught instanceof InvoicingError ? caught.message : tr("Factures indisponibles.")))
       .finally(() => setLoading(false));
-  }, [token, tr]);
+  }, [token, tr, typeFilter, dateFrom, dateTo]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -110,6 +115,26 @@ export default function InvoicesPage() {
           }}
         />
 
+        <nav className="flex flex-wrap gap-2">
+          <FilterPill active={typeFilter === null} onClick={() => setTypeFilter(null)}>
+            {tr("Tous")}
+          </FilterPill>
+          {(Object.keys(INVOICE_TYPE_LABEL) as InvoiceType[]).map((value) => (
+            <FilterPill key={value} active={typeFilter === value} onClick={() => setTypeFilter(value)}>
+              {tr(INVOICE_TYPE_LABEL[value])}
+            </FilterPill>
+          ))}
+        </nav>
+
+        <DateRangeFilter
+          from={dateFrom}
+          to={dateTo}
+          onChange={(range) => {
+            setDateFrom(range.from);
+            setDateTo(range.to);
+          }}
+        />
+
         {error ? <p className="text-sm text-danger">{error}</p> : null}
 
         {loading ? (
@@ -121,13 +146,14 @@ export default function InvoicesPage() {
             <DataTable
   name="factures"
   rows={invoices}
-  headers={[tr("Numéro"), tr("Type"), tr("Commande"), tr("Client"), tr("HT"), tr("TVA"), tr("TTC"), tr("Action")]}
-  actionColumns={[7]}
+  headers={[tr("Numéro"), tr("Date"), tr("Type"), tr("Commande"), tr("Client"), tr("HT"), tr("TVA"), tr("TTC"), tr("Action")]}
+  actionColumns={[8]}
   renderRow={(invoice) => {
                   const money = (amount: number) => formatMoney({ amount, currency: invoice.currency });
                   return (
                     <tr key={invoice.id} className="border-b border-line">
                       <td className="py-3 pr-4 text-ink">{invoice.number}</td>
+                      <td className="py-3 pr-4 text-ink-soft">{invoice.issued_at ? new Date(invoice.issued_at).toLocaleDateString("fr-FR") : "-"}</td>
                       <td className="py-3 pr-4 text-ink-soft">
                         {tr(INVOICE_TYPE_LABEL[invoice.type])}
                         {invoice.reason ? ` - ${invoice.reason}` : ""}
@@ -175,6 +201,20 @@ export default function InvoicesPage() {
         )}
       </main>
     </div>
+  );
+}
+
+function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+        active ? "border-gold bg-gold text-on-primary font-medium" : "border-line text-ink hover:border-gold"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 

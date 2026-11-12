@@ -42,10 +42,12 @@ function authHeaders(token: string): HeadersInit {
   return { Authorization: `Bearer ${token}`, Accept: "application/json", "Content-Type": "application/json" };
 }
 
-export async function listPayments(token: string, filters: { orderNumber?: string; status?: PaymentStatus } = {}) {
+export async function listPayments(token: string, filters: { orderNumber?: string; status?: PaymentStatus; from?: string; to?: string } = {}) {
   const params = new URLSearchParams();
   if (filters.orderNumber) params.set("order_number", filters.orderNumber);
   if (filters.status) params.set("status", filters.status);
+  if (filters.from) params.set("from", filters.from);
+  if (filters.to) params.set("to", filters.to);
   const query = params.size > 0 ? `?${params.toString()}` : "";
 
   const response = await fetch(`${API_BASE_URL}/admin/payments${query}`, {

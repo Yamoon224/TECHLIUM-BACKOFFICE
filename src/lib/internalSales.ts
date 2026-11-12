@@ -72,7 +72,7 @@ function authHeaders(token: string): HeadersInit {
 }
 
 export async function listInternalSales(token: string): Promise<InternalSale[]> {
-  const response = await fetch(`${API_BASE_URL}/admin/internal-sales`, { headers: authHeaders(token), cache: "no-store" });
+  const response = await fetch(`${API_BASE_URL}/admin/internal-sales?limit=200`, { headers: authHeaders(token), cache: "no-store" });
   if (!response.ok) throw await parseError(response);
   return ((await response.json()) as { data: InternalSale[] }).data;
 }
