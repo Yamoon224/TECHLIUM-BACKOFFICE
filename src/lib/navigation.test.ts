@@ -19,7 +19,7 @@ describe("navFor", () => {
   it("keeps every former menu page", () => {
     const hrefs = STAFF_NAV.flatMap((group) => group.items.map((item) => item.href));
     const former = [
-      "/", "/commandes", "/categories", "/bannieres", "/produits", "/offres", "/vendeurs", "/stock", "/achats", "/ventes-internes", "/paiements", "/livraisons",
+      "/", "/commandes", "/categories", "/bannieres", "/boutique", "/produits", "/offres", "/vendeurs", "/stock", "/achats", "/ventes-internes", "/paiements", "/livraisons",
       "/factures", "/comptabilite", "/reversements", "/retours", "/rapports", "/promotions", "/annonces", "/support", "/avis", "/notifications", "/audit",
       "/qrcodes", "/acces",
     ];
