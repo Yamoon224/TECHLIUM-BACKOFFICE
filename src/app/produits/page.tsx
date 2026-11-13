@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BackofficeNav } from "@/components/BackofficeNav";
 import { Button } from "@/components/Button";
+import { ColorsEditor } from "@/components/ColorsEditor";
 import { ProductImportModal } from "@/components/ProductImportModal";
 import { useAuth } from "@/lib/useAuth";
 import {
@@ -29,6 +30,7 @@ import {
   updateProduct,
   type Category,
   type Product,
+  type ProductColor,
 } from "@/lib/catalog";
 
 const STATUS_LABEL: Record<Product["status"], string> = {
@@ -391,6 +393,7 @@ interface NewProductInput {
   price_amount: number;
   stock_quantity: number;
   photos: File[];
+  colors: ProductColor[];
   extra: { name_en: string; description_en: string };
 }
 
@@ -403,6 +406,7 @@ interface ProductPatch {
   name_en: string;
   description: string;
   description_en: string;
+  colors: ProductColor[];
 }
 
 /**
@@ -444,6 +448,7 @@ function ProductFormModal({
   const [description, setDescription] = useState(product?.description ?? "");
   const [descriptionEn, setDescriptionEn] = useState(product?.description_en ?? "");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [colors, setColors] = useState<ProductColor[]>(product?.colors ?? []);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -473,6 +478,7 @@ function ProductFormModal({
           name_en: nameEn.trim(),
           description: description.trim(),
           description_en: descriptionEn.trim(),
+          colors: cleanColors(colors),
         });
       } else {
         await onCreate({
@@ -483,6 +489,7 @@ function ProductFormModal({
           price_amount: Number(price),
           stock_quantity: Number(stock),
           photos,
+          colors: cleanColors(colors),
           extra: { name_en: nameEn.trim(), description_en: descriptionEn.trim() },
         });
       }
@@ -598,6 +605,12 @@ function ProductFormModal({
         </section>
 
         <section className="flex flex-col gap-3">
+          <h3 className="font-display text-sm font-semibold text-ink">{tr("Couleurs")}</h3>
+          <p className="text-xs text-ink-soft">{tr("Les couleurs proposées aux clients, affichées en pastilles sur la boutique.")}</p>
+          <ColorsEditor value={colors} onChange={setColors} />
+        </section>
+
+        <section className="flex flex-col gap-3">
           <h3 className="font-display text-sm font-semibold text-ink">{tr("Photos")}</h3>
           {product ? (
             <Gallery product={product} onAdd={onAddPhoto} onCover={onCover} onRemove={onRemovePhoto} />
@@ -623,6 +636,11 @@ function ProductFormModal({
       </div>
     </FormModal>
   );
+}
+
+/** Drops half-filled rows (no name) before sending. */
+function cleanColors(colors: ProductColor[]): ProductColor[] {
+  return colors.map((color) => ({ name: color.name.trim(), hex: color.hex })).filter((color) => color.name !== "");
 }
 
 function Gallery({

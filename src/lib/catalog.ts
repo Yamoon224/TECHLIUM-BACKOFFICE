@@ -39,6 +39,12 @@ export interface ProductImage {
 
 export const MAX_GALLERY_IMAGES = 8;
 
+export interface ProductColor {
+  name: string;
+  /** #rrggbb */
+  hex: string;
+}
+
 export interface Product {
   id: number;
   category_id: number;
@@ -49,6 +55,8 @@ export interface Product {
   slug: string;
   description: string | null;
   description_en?: string | null;
+  /** Colour choices offered on the storefront. */
+  colors?: ProductColor[];
   image_url: string | null;
   /** The whole gallery, cover first. */
   images?: ProductImage[];
@@ -68,6 +76,7 @@ export interface ProductInput {
   slug?: string;
   description?: string;
   condition_state?: ConditionState;
+  colors?: ProductColor[];
   sku?: string;
   price_amount: number;
   currency?: string;
@@ -83,6 +92,7 @@ export interface ProductUpdateInput {
   description?: string;
   name_en?: string;
   description_en?: string;
+  colors?: ProductColor[];
   condition_state?: ConditionState;
   status?: ProductStatus;
   price_amount?: number;
